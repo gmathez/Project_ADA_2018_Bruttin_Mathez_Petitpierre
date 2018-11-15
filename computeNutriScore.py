@@ -1,17 +1,17 @@
 from numpy import isnan
 
 def getFruits(product):
-    if not isnan(product['fruits-vegetables-nuts_100g']):
-        fruits_content = product ['fruits-vegetables-nuts_100g']
-    elif not isnan(product['fruits-vegetables-nuts-estimate_100g']):
-        fruits_content = product['fruits-vegetables-nuts-estimate_100g']
-    elif product.categories_tags.str.contains('fruit-juice', case=False):
+    if ~ isnan(product['fruits-vegetables-nuts_100g'])[0]:
+        fruits_content = product ['fruits-vegetables-nuts_100g'][0]
+    elif ~ isnan(product['fruits-vegetables-nuts-estimate_100g'])[0]:
+        fruits_content = product['fruits-vegetables-nuts-estimate_100g'][0]
+    elif product.categories_tags.str.contains('fruit-juice', case=False)[0]:
         fruits_content = 100
-    elif product.categories_tags.str.contains('compote', case=False):
+    elif product.categories_tags.str.contains('compote', case=False)[0]:
         fruits_content = 90
-    elif product.categories_tags.str.contains('vegetables', case=False):
+    elif product.categories_tags.str.contains('vegetables', case=False)[0]:
         fruits_content = 85
-    elif product.categories_tags.str.contains('jams', case=False):
+    elif product.categories_tags.str.contains('jams', case=False)[0]:
         fruits_content = 50
     else:
         fruits_content = 0
@@ -56,7 +56,7 @@ def computeFruitsScore(product):
     return fruit_score 
 
 def computeFibersScore(product):
-    fibers_content = product.fiber_100g
+    fibers_content = product.fiber_100g[0]
     if isnan(fibers_content):
         fibers_content = -999
     
@@ -78,7 +78,7 @@ def computeFibersScore(product):
     return fibers_score
 
 def computeProteinsScore(product):
-    prot_content = product.proteins_100g
+    prot_content = product.proteins_100g[0]
     if isnan(prot_content):
         prot_content = -999
     
@@ -100,7 +100,7 @@ def computeProteinsScore(product):
     return prot_score
 
 def computeEnergyScoreBeverages(product):
-    energy_content = product.energy_100g
+    energy_content = product.energy_100g[0]
     if isnan(energy_content):
         energy_content = -999
     
@@ -132,7 +132,7 @@ def computeEnergyScoreBeverages(product):
     return energy_score
 
 def computeEnergyScore(product):
-    energy_content = product.energy_100g
+    energy_content = product.energy_100g[0]
     if isnan(energy_content):
         energy_content = -999
     
@@ -164,9 +164,9 @@ def computeEnergyScore(product):
     return energy_score
 
 def computeFatScore(product):
-    if product.categories_tags.str.contains('fats', case=False):
-        ags = product['saturated-fat_100g']
-        fat_content = product.fat_100g
+    if product.categories_tags.str.contains('fats', case=False)[0]:
+        ags = product['saturated-fat_100g'][0]
+        fat_content = product.fat_100g[0]
         if isnan(ags) or isnan(fat_content):
             fat_score = -999
         elif fat_content == 0:
@@ -174,31 +174,31 @@ def computeFatScore(product):
         else:
             fat_ratio = ags / fat_content
 
-        if fat_ratio < 10:
-            fat_score = 0
-        elif fat_ratio < 16:
-            fat_score = 1
-        elif fat_ratio < 22:
-            fat_score = 2
-        elif fat_ratio < 28:
-            fat_score = 3
-        elif fat_ratio < 34:
-            fat_score = 4
-        elif fat_ratio < 40:
-            fat_score = 5
-        elif fat_ratio < 46:
-            fat_score = 6
-        elif fat_ratio < 52:
-            fat_score = 7
-        elif fat_ratio < 58:
-            fat_score = 8
-        elif fat_ratio < 64:
-            fat_score = 9
-        else:
-            fat_score = 10
+            if fat_ratio < 10:
+                fat_score = 0
+            elif fat_ratio < 16:
+                fat_score = 1
+            elif fat_ratio < 22:
+                fat_score = 2
+            elif fat_ratio < 28:
+                fat_score = 3
+            elif fat_ratio < 34:
+                fat_score = 4
+            elif fat_ratio < 40:
+                fat_score = 5
+            elif fat_ratio < 46:
+                fat_score = 6
+            elif fat_ratio < 52:
+                fat_score = 7
+            elif fat_ratio < 58:
+                fat_score = 8
+            elif fat_ratio < 64:
+                fat_score = 9
+            else:
+                fat_score = 10
 
     else:
-        ags = product['saturated_fat_100g']
+        ags = product['saturated-fat_100g'][0]
         if isnan(ags):
             ags = -999
 
@@ -230,7 +230,7 @@ def computeFatScore(product):
     return fat_score      
 
 def computeSugarScoreBeverages(product):
-    sugar_content = product.sugars_100g
+    sugar_content = product.sugars_100g[0]
     if isnan(sugar_content):
         sugar_content = -999
     
@@ -262,7 +262,7 @@ def computeSugarScoreBeverages(product):
     return sugar_score
 
 def computeSugarScore(product):
-    sugar_content = product.sugars_100g
+    sugar_content = product.sugars_100g[0]
     if isnan(sugar_content):
         sugar_content = -999
     
@@ -294,15 +294,15 @@ def computeSugarScore(product):
     return sugar_score
 
 def computeSodiumScore(product):
-    sodium_content = product.salt_100g
+    sodium_content = product.salt_100g[0]
     if isnan(sodium_content):
-        sodium_content = product.sodium_100g 
+        sodium_content = product.sodium_100g[0] 
         if isnan(sodium_content):
             sodium_content = -999
         else: 
             sodium_content = sodium_content * 1000
     else:
-        sodium_content = product.salt_100g * 1000 / 2.5
+        sodium_content = product.salt_100g[0] * 1000 / 2.5
 
     if sodium_content < 0:
         sodium_score = -999
@@ -335,7 +335,7 @@ def computeSodiumScore(product):
 def computePositivePoints(product, neg):
     fruits = computeFruitsScore(product)
     fibers = computeFibersScore(product)
-    if neg < 11 or fruits == 5 or product.categories_tags.str.contains('cheese', case=False):
+    if neg < 11 or fruits == 5 or product.categories_tags.str.contains('cheese', case=False)[0]:
         proteins = computeProteinsScore(product)
     else:
         proteins = 0
@@ -404,12 +404,12 @@ def getNutriScore(score):
 # Top function    
 def computeNutriScore(product):
 
-    if product.categories_tags.str.contains('beverages', case=False) and \
-        (not product.categories_tags.str.contains('milk', case=False)):
+    if product.categories_tags.str.contains('beverages', case=False)[0] & \
+        (~ product.categories_tags.str.contains('milk', case=False)[0]):
         final_score = computeScoreBeverages(product)
         NutriScore = getNutriScoreBeverages(final_score)
     else:
         final_score = computeScore(product)            
         NutriScore = getNutriScore(final_score)
 
-    return NutriScore        
+    return (NutriScore, final_score)     
