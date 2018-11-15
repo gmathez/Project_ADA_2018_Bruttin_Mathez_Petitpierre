@@ -104,7 +104,7 @@ def computeEnergyScoreBeverages(product):
     if isnan(energy_content):
         energy_content = -999
     
-    if energy_content < 0:
+    if energy_content < 0: 
         energy_score = -999
     elif energy_content == 0:
         energy_score = 0
