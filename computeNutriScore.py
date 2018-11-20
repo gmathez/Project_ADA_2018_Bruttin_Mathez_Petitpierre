@@ -377,8 +377,8 @@ def getNutriScoreBeverages(score):
         NutriScore = 'c'
     elif score <= 9:
         NutriScore = 'd'
-    elif score == 10:
-        NutriScore = 'd'
+    elif score <= 20:
+        NutriScore = 'e'
     else:
         NutriScore = 'Error'
     
@@ -405,6 +405,7 @@ def getNutriScore(score):
 def computeNutriScore(product):
 
     if product.categories_tags.str.contains('beverages', case=False)[0] & \
+        ~product.categories_tags.str.contains('en:plant-based-foods,', case=False)[0] &\
         (~ product.categories_tags.str.contains('milk', case=False)[0]):
         final_score = computeScoreBeverages(product)
         NutriScore = getNutriScoreBeverages(final_score)
