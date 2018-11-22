@@ -5,11 +5,11 @@ def getFruits(product):
         fruits_content = product ['fruits-vegetables-nuts_100g'][0]
     elif ~ isnan(product['fruits-vegetables-nuts-estimate_100g'])[0]:
         fruits_content = product['fruits-vegetables-nuts-estimate_100g'][0]
-    elif product.categories_tags.str.contains('fruit-juice', case=False)[0]:
+    elif product.categories_tags.str.contains('juices-and-nectars', case=False)[0]:
         fruits_content = 100
     elif product.categories_tags.str.contains('compote', case=False)[0]:
         fruits_content = 90
-    elif product.categories_tags.str.contains('vegetables', case=False)[0]:
+    elif product.categories_tags.str.contains('en:vegetables-based-foods', case=False)[0]:
         fruits_content = 85
     elif product.categories_tags.str.contains('jams', case=False)[0]:
         fruits_content = 50
@@ -41,7 +41,7 @@ def computeFruitsScore(product):
     fruits_content = getFruits(product)
 
     if fruits_content < 0:
-        fruit_score = -999
+        fruit_score = 999
     elif fruits_content <= 40:
         fruit_score = 0
     elif fruits_content <= 60:
@@ -51,7 +51,7 @@ def computeFruitsScore(product):
     elif fruits_content <= 100:
         fruit_score =  5
     else:
-        fruit_score = -999
+        fruit_score = 999
     
     return fruit_score 
 
@@ -61,7 +61,7 @@ def computeFibersScore(product):
         fibers_content = -999
     
     if fibers_content < 0:
-        fibers_score = -990
+        fibers_score = 990
     elif fibers_content <= 0.9:
         fibers_score = 0
     elif fibers_content <= 1.9:
@@ -83,7 +83,7 @@ def computeProteinsScore(product):
         prot_content = -999
     
     if prot_content < 0:
-        prot_score = -990
+        prot_score = 990
     elif prot_content <= 1.6:
         prot_score = 0
     elif prot_content <= 3.2:
@@ -105,7 +105,7 @@ def computeEnergyScoreBeverages(product):
         energy_content = -999
     
     if energy_content < 0: 
-        energy_score = -999
+        energy_score = 999
     elif energy_content == 0:
         energy_score = 0
     elif energy_content <= 30:
@@ -164,7 +164,7 @@ def computeEnergyScore(product):
     return energy_score
 
 def computeFatScore(product):
-    if product.categories_tags.str.contains('fats', case=False)[0]:
+    if product.categories_tags.str.contains('en:fats', case=False)[0]:
         ags = product['saturated-fat_100g'][0]
         fat_content = product.fat_100g[0]
         if isnan(ags) or isnan(fat_content):
@@ -235,7 +235,7 @@ def computeSugarScoreBeverages(product):
         sugar_content = -999
     
     if sugar_content < 0:
-        sugar_score = -999
+        sugar_score = 999
     elif sugar_content == 0:
         sugar_score = 0
     elif sugar_content <= 1.5:
@@ -368,9 +368,11 @@ def computeScore(product):
     return negative_points - positive_points 
 
 # Compute NutriScore for Beverages
-def getNutriScoreBeverages(score):
-    if score == -999:
+def getNutriScoreBeverages(score, product):
+    if product.categories_tags.str.contains('en:spring-waters', case = False)[0]:
         NutriScore = 'a'
+    elif score < -900:
+        NutriScore = 'Error'
     elif score <= 1:
         NutriScore = 'b'
     elif score <= 5:
@@ -386,7 +388,9 @@ def getNutriScoreBeverages(score):
 
 # Compute Nutriscore for non Beverage products
 def getNutriScore(score):
-    if score < 0:
+    if score < -900:
+        NutriScore = 'Error'
+    elif score < 0:
         NutriScore = 'a'
     elif score <= 2:
         NutriScore = 'b'
@@ -408,7 +412,7 @@ def computeNutriScore(product):
         ~product.categories_tags.str.contains('en:plant-based-foods,', case=False)[0] &\
         (~ product.categories_tags.str.contains('milk', case=False)[0]):
         final_score = computeScoreBeverages(product)
-        NutriScore = getNutriScoreBeverages(final_score)
+        NutriScore = getNutriScoreBeverages(final_score, product)
     else:
         final_score = computeScore(product)            
         NutriScore = getNutriScore(final_score)
