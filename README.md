@@ -17,14 +17,35 @@ The database is not complete. Every products do not have full information becaus
 
 The database are in CSV and can be easily use in our computer because of its relatively small size. 
 
-## A list of internal milestones up until project milestone 2
-* Check which fraction of the ingredients contains complete or almost complete raw nutritional data (nutrients, fats, etc.)
-* Check which fraction of the products from the database already have a Nutri-score and check if the latter seems coherent with the Nutri-score’s official computation criteria. Adapt our formula accordingly.
-* Gather informations about nutritional recommendations in order to establish new computation criteria. 
-* Try to enrich and complete the data in regard with similar products (nearest neighbours).
-* Treat the issue of very incomplete products within the data set.
+## List of internal milestones up until project milestone 2
+* Check which fraction of the ingredients contains complete or almost complete raw nutritional data (nutrients, fats, etc.) ✓
+* Check which fraction of the products from the database already have a Nutri-score and check if the latter seems coherent with the Nutri-score’s official computation criteria. Adapt our formula accordingly ✓
+* Gather informations about nutritional recommendations in order to establish new computation criteria ✓
+* Try to enrich and complete the data in regard with similar products ✓
+* Treat the issue of very incomplete products within the data set ✓
 
-## Questions for TAa
+## List of internal milestones up until poster presentation
+### User interface design
+* Develop an interface, so that the user can enter the aliments he eats into the program
+* For missing information, the user must be able to choose either to enter the data himself/herself, or to use the automatic reconstruction of the data by the closest foods at category level, or to use the automatic data query of the US Department of Agriculture
+* The interface must allow the user to enter the quantities consumed, for each food
+* The interface must optionally allow the user to indicate the period over which he/she has consumed these foods (snacks, meals, days, etc.)
+### Algorithm
+*
+### Information design
+* The interface must present the user with the quantities of nutrients he/she has consumed
+* The user must receive an indicative assessment of the nutritional quality of his/her food (expanded Nutri-score)
+* (if enough time) The program must indicate to the user the main problems of his diet. Insufficient nutrients must be indicated
+* (if enough time) The user should receive suggestions for foods that could help to fill nutritional gaps
+### Collect information for the poster
+* Test the program with a volunteer and keep this test as a case study for using the program
+* Extract the information and charts necessary for the poster
+### Creation of the poster and presentation
+* Create the poster and print it
+* Prepare for the oral presentation
+* Present the poster (21/22/23 Jan.)
+
+## Questions for TAs
 Nothing at this moment
 
 
