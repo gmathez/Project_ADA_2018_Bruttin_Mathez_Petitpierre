@@ -31,7 +31,12 @@ The database are in CSV and can be easily use in our computer because of its rel
 * The interface must allow the user to enter the quantities consumed, for each food
 * The interface must optionally allow the user to indicate the period over which he/she has consumed these foods (snacks, meals, days, etc.)
 ### Algorithm
-*
+* Adapt the algorithm to take the quantities into account and to weight them in order to obtain a global indice
+* Adapt the algorithm to take into account the nutrients of the expanded Nutri-score
+* Adapt the algorithm to determine if the quantity of food ingested during the specified time seems to be reasonable
+* Improve the robustness of the algorithm by improving error handling when erroneous or non-numerical values are entered by the user
+* (if enough time) Adapt the algorithm to compare the values entered with the nutritional recommandations
+* (if enough time) Adapt the algorithm to be able to retrieve an element with the desired nutritional values, so that it can be suggested to the user
 ### Information design
 * The interface must present the user with the quantities of nutrients he/she has consumed
 * The user must receive an indicative assessment of the nutritional quality of his/her food (expanded Nutri-score)
