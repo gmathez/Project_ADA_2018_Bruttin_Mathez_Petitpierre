@@ -56,4 +56,14 @@ With Milestone 2, we clean and fill the database that you can download [here (us
 ## Questions for TAs
 Nothing at this moment
 
+## Files description
+### computeNutriScore.py
+This file contains the functions of the algorithm based on the indications of the French Ministry of Agriculture which allow us to calculate the nutriscore.
+### Milestone_2.ipynb
+The main notebook of our project. It contains the data presentation elements, cleaning, and all other processes included in milestone 2. 
+### data Folder
+This folder must contain the open food dataset, in csv format. It can also contain tab_for_filling.csv, which contains the medians of the elements by category and nutrient as well as data_food_final.csv ([downloadable here](https://drive.google.com/drive/folders/1G8-zV0-ctUQSk3X2qqIoh6SKuCFYmmAd?usp=sharing)), which contains the dataset completed by our preprocessing and which we used to present our data in the second part of the notebook. The calculation time for these last two files being long, it is indeed preferable to use the files already processed.
+### Data_scrapping_USagriculture.ipynb
+Secondary notebook, called by the main notebook and containing the algorithm to access the US Department of Agriculture database.
+
 
