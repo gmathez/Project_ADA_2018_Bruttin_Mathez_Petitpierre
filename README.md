@@ -17,6 +17,8 @@ The database is not complete. Every products do not have full information becaus
 
 The database are in CSV and can be easily use in our computer because of its relatively small size. 
 
+With Milestone 2, we clean and fill the database that you can download [here (using EPFL mail)](https://drive.google.com/drive/folders/1G8-zV0-ctUQSk3X2qqIoh6SKuCFYmmAd?usp=sharing). 
+
 ## List of internal milestones up until project milestone 2
 * Check which fraction of the ingredients contains complete or almost complete raw nutritional data (nutrients, fats, etc.) ✓
 * Check which fraction of the products from the database already have a Nutri-score and check if the latter seems coherent with the Nutri-score’s official computation criteria. Adapt our formula accordingly ✓
