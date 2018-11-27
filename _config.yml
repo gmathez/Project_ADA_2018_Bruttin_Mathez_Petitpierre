@@ -16,8 +16,8 @@
 title: "Expanding Nutri-Score  : take your menu to the next level"
 email: "gregory.mathez@epfl.ch"
 description: ""
-baseurl: "/Home.html" # the subpath of your site, e.g. /blog
-url: "https://gmathez.github.io/Project_ADA_2018_Bruttin_Mathez_Petitpierre/" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: ""
 github_username:  "gmathez"
 
