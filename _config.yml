@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 title: "Expanding Nutri-Score  : take your menu to the next level"
 email: "gregory.mathez@epfl.ch"
-description: ""
+description: "ADA 2018"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: ""
