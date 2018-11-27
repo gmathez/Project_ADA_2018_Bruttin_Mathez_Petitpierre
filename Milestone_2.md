@@ -304,23 +304,23 @@ One can observe that the products graded C/D/E have very similar properties. The
 
 As stated above, we developped our nutri-score computing algorithm using the exact criteria specified in the documents from the french ministry of Agriculture. As we also know the true grade, which is indicated in the database, we can quantify the accuracy of the algorithm and try to increase its efficiency.
 
-In general, except for exeptions, the score are calculate in this manner : 
-$$ ScoreBeverages =  Energy + Sugar - Fruits$$
-$$ ScoreNonBeverages = NegativePoints - PositivePoints = (Energy + Fat + Sugar + Sodium) - (Fruits + Fibers + Proteins)$$
+In general, except for exeptions, the score are calculate in this manner : <br>
+ScoreBeverages =  Energy + Sugar - Fruits<br>
+ScoreNonBeverages = NegativePoints - PositivePoints = (Energy + Fat + Sugar + Sodium) - (Fruits + Fibers + Proteins)<br>
 
-For beverages grades:
-$$ Water ==>  A$$
-$$ ScoreBeverages <= 1 ==> B$$
-$$ 1 < ScoreBeverages <= 5 ==> C$$
-$$ 5 < ScoreBeverages <= 9 ==> D$$
-$$ 9 < ScoreBeverages <= 20 ==> E$$
+For beverages grades:<br>
+Water ==>  A<br>
+ScoreBeverages <= 1 ==> B<br>
+1 < ScoreBeverages <= 5 ==> C<br>
+5 < ScoreBeverages <= 9 ==> D<br>
+9 < ScoreBeverages <= 20 ==> E<br>
 
-For non-beverages grades:
-$$ ScoreNonBeverages < 0 ==> A$$
-$$ 0 < ScoreNonBeverages <= 2 ==> B$$
-$$ 2 < ScoreNonBeverages <= 10 ==> C$$
-$$ 10 < ScoreNonBeverages <= 18 ==> D$$
-$$ 18 < ScoreNonBeverages <= 40 ==> E$$
+For non-beverages grades:<br>
+ScoreNonBeverages < 0 ==> A<br>
+0 < ScoreNonBeverages <= 2 ==> B<br>
+2 < ScoreNonBeverages <= 10 ==> C<br>
+10 < ScoreNonBeverages <= 18 ==> D<br>
+18 < ScoreNonBeverages <= 40 ==> E<br>
 
     83.72 % of product in our final database have Nutri-Score provided by OpenFoodFacts
     
