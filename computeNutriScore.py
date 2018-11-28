@@ -362,7 +362,7 @@ def computeScoreBeverages(product):
 
 # Compute score for non beverages products
 def computeScore(product):
-    negative_points=  computeNegativePoints(product) 
+    negative_points =  computeNegativePoints(product) 
     positive_points  = computePositivePoints(product, negative_points)
     
     return negative_points - positive_points 
