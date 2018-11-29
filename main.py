@@ -2,11 +2,12 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
-from kivy.properties import BooleanProperty
+from kivy.properties import BooleanProperty, ObjectProperty
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
+from kivy.uix.recyclegridlayout import RecycleGridLayout
 from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
-from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.checkbox import CheckBox
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.textinput import TextInput
@@ -14,10 +15,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.spinner import Spinner
-from kivy.uix.tabbedpanel import TabbedPanel
-from kivy.properties import ObjectProperty
 from kivy.lang import Builder
+from kivy.uix.gridlayout import GridLayout
 
 Builder.load_file('manager.kv')
 Builder.load_file('screenhome.kv')
@@ -53,17 +52,32 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 
     def apply_selection(self, rv, index, is_selected):
         ''' Respond to the selection of items in the view. '''
-        # self.selected = is_selected
-        # if is_selected:
-        #     print("selection changed to {0}".format(rv.data[index]))
-        # else:
-        #     print("selection removed for {0}".format(rv.data[index]))
+        self.selected = is_selected
 
+class Grid(GridLayout):
+    pass
+    # def __init__(self, **kwargs):
+    #     df = pd.read_csv('./data/Sample_data_food.csv')
+    #     for heading in df.columns:
+    #         self.add_widget(Label(text=heading))
 
 class RV(RecycleView):
+    grid = RecycleGridLayout
+    df = pd.read_csv('../data/data_food_final.csv')
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
-        self.data = [{'text': str(x)} for x in range(100)]
+
+    def upload(self, query, active):
+        self.data = []
+        if active:
+            pass
+        else:
+            isinside =  self.df['product_name'].str.contains(query, case=False)
+            if any(isinside):
+                selection = self.df[isinside]
+                self.data = [{'text': str(row[1]) + '  -  ' +str(row[2]), 'font_size': 20} for row in selection.itertuples()]
+            else:
+                self.data = [{'text' : 'No product found'}]
 
 class ScreenHome(Screen):
     pass

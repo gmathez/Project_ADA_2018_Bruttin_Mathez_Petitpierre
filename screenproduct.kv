@@ -7,16 +7,34 @@
             orientation: 'horizontal'
             size_hint: 1,.25
             TextInput:
+                id: query
                 size_hint: 5,1
                 text: 'Input BarCode or Product Name'
-                multiline: False
                 font_size: 30
+                multiline: False
                 on_focus: self.text = 'Input BarCode or Product Name' if self.text == '' else self.text
                 on_touch_down: self.delete_selection(self.select_all()) if self.text == 'Input BarCode or Product Name' else True
-            ToggleButton:
-                text: 'Raw Food Item'
-                on_press:
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'Raw Food Item'
+                CheckBox:
+                    id: raw
+                    active: False
+                
+        GridLayout:
+            size_hint: 1,.15
+            cols:2
+            rows:1
+            Label:
+                text: 'Code'
+                font_size: 30
+            Label:
+                text: 'Product'
+                font_size: 30
+
         RV:
+            id: rv
         BoxLayout:
             orientation: 'horizontal'
             size_hint: 1,.25
@@ -26,6 +44,7 @@
 
             Button:
                 text: 'Add'
+                on_press: root.ids.rv.upload(root.ids.query.text, root.ids.raw.active)
 
             Button:
                 text: 'Validate'
