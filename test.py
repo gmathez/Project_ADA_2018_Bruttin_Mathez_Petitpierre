@@ -1,31 +1,34 @@
 from kivy.app import App
-from kivy.uix.label import Label
+from kivy.lang import Builder
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
+from kivy.uix.label import Label
 from kivy.properties import BooleanProperty
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
-from kivy.uix.togglebutton import ToggleButton
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.anchorlayout import AnchorLayout
-from kivy.uix.button import Button
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.spinner import Spinner
-from kivy.uix.tabbedpanel import TabbedPanel
-from kivy.properties import ObjectProperty
-from kivy.lang import Builder
 
-Builder.load_file('manager.kv')
-Builder.load_file('screenhome.kv')
-Builder.load_file('screenproduct.kv')
-Builder.load_file('screenquantities.kv')
-Builder.load_file('rv.kv')
+Builder.load_string('''
+<SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+<RV>:
+    viewclass: 'SelectableLabel'
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+''')
 
-import pandas as pd
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
                                  RecycleBoxLayout):
@@ -37,6 +40,7 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
     index = None
     selected = BooleanProperty(False)
     selectable = BooleanProperty(True)
+    taken = BooleanProperty(False)
 
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
@@ -53,11 +57,11 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 
     def apply_selection(self, rv, index, is_selected):
         ''' Respond to the selection of items in the view. '''
-        # self.selected = is_selected
-        # if is_selected:
-        #     print("selection changed to {0}".format(rv.data[index]))
-        # else:
-        #     print("selection removed for {0}".format(rv.data[index]))
+        self.selected = is_selected
+        if is_selected:
+            print("selection changed to {0}".format(rv.data[index]))
+        else:
+            print("selection removed for {0}".format(rv.data[index]))
 
 
 class RV(RecycleView):
@@ -65,21 +69,10 @@ class RV(RecycleView):
         super(RV, self).__init__(**kwargs)
         self.data = [{'text': str(x)} for x in range(100)]
 
-class ScreenHome(Screen):
-    pass
 
-class ScreenProduct(Screen):
-    pass
-
-class ScreenQuantities(Screen):
-    pass
-
-class Manager(ScreenManager):
-    pass
-
-class NutriScoreApp(App):
+class TestApp(App):
     def build(self):
-        return Manager()
+        return RV()
 
 if __name__ == '__main__':
-    NutriScoreApp().run()
+    TestApp().run()

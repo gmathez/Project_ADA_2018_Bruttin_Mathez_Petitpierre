@@ -22,7 +22,7 @@ def computeFruitsScoreBeverages(product):
     fruits_content = getFruits(product)
 
     if fruits_content < 0:
-        fruit_score = -999
+        fruit_score = 999
     elif fruits_content <= 40:
         fruit_score = 0
     elif fruits_content <= 60:
@@ -32,7 +32,7 @@ def computeFruitsScoreBeverages(product):
     elif fruits_content <= 100:
         fruit_score =  10
     else:
-        fruit_score = -999
+        fruit_score = 999
     
     return fruit_score   
 
@@ -61,7 +61,7 @@ def computeFibersScore(product):
         fibers_content = -999
     
     if fibers_content < 0:
-        fibers_score = 990
+        fibers_score = 999
     elif fibers_content <= 0.9:
         fibers_score = 0
     elif fibers_content <= 1.9:

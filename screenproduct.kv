@@ -3,12 +3,23 @@
 <ScreenProduct>:
     BoxLayout:
         orientation: 'vertical'
-        Label:
-            text: 'hello'
-        Button:
-            text: 'World !'
         BoxLayout:
             orientation: 'horizontal'
+            size_hint: 1,.25
+            TextInput:
+                size_hint: 5,1
+                text: 'Input BarCode or Product Name'
+                multiline: False
+                font_size: 30
+                on_focus: self.text = 'Input BarCode or Product Name' if self.text == '' else self.text
+                on_touch_down: self.delete_selection(self.select_all()) if self.text == 'Input BarCode or Product Name' else True
+            ToggleButton:
+                text: 'Raw Food Item'
+                on_press:
+        RV:
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1,.25
             Button:
                 text: 'Back'
                 on_press: root.manager.current = 'Home Screen'

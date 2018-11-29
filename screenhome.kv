@@ -4,7 +4,15 @@
     BoxLayout:
         orientation: 'vertical'
         Label:
-            text: 'Home Sweet Home'
+            text: '[size=50][b]Expanding Nutri-Score : \n take your menu to the next level[/b][/size] \n \n [size=30]ADA 2018[/size]'
+            halign: 'center'
+            markup: True
+            canvas.before:
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: 'background.png'
         Button:
             text: 'Begin'
+            size_hint: 1, .25
             on_press: root.manager.current = 'Product Screen'
