@@ -1,0 +1,23 @@
+#:kivy 1.10.0
+
+<Manager>:
+    id: screen_manager
+
+    screen_home: screen_home
+    screen_product: screen_product
+    screen_quantities: screen_quantities
+
+    ScreenHome:
+        id: screen_home
+        name: 'Home Screen'
+        manager: screen_manager
+
+    ScreenProduct:
+        id: screen_product
+        name: 'Product Screen'
+        manager: screen_manager
+
+    ScreenQuantities:
+        id: screen_quantities
+        name: 'Quantities Screen'
+        manager: screen_manager

@@ -1,0 +1,21 @@
+#:kivy 1.10.0
+
+<ScreenProduct>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'hello'
+        Button:
+            text: 'World !'
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                text: 'Back'
+                on_press: root.manager.current = 'Home Screen'
+
+            Button:
+                text: 'Add'
+
+            Button:
+                text: 'Validate'
+                on_press: root.manager.current = 'Quantities Screen'

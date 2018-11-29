@@ -1,0 +1,10 @@
+#:kivy 1.10.0
+
+<ScreenQuantities>:
+    BoxLayout:
+        orientation: 'horizontal'
+        Label:
+            text: '2nd screen'
+        Button:
+            text: 'to 1st screen'
+            on_press: root.manager.current = 'Product Screen'

@@ -1,0 +1,10 @@
+#:kivy 1.10.0
+
+<ScreenHome>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Home Sweet Home'
+        Button:
+            text: 'Begin'
+            on_press: root.manager.current = 'Product Screen'
