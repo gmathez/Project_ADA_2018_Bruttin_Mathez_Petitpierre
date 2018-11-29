@@ -1,18 +1,10 @@
 #:kivy 1.10.0
 
 <ScreenHome>:
-    BoxLayout:
-        orientation: 'vertical'
-        Label:
-            text: '[size=50][b]Expanding Nutri-Score : \n take your menu to the next level[/b][/size] \n \n [size=30]ADA 2018[/size]'
-            halign: 'center'
-            markup: True
-            canvas.before:
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-                    source: 'background.png'
-        Button:
-            text: 'Begin'
-            size_hint: 1, .25
-            on_press: root.manager.current = 'Product Screen'
+    Button:
+        text: '[size=50][b]Expanding Nutri-Score : \n take your menu to the next level[/b][/size] \n \n [size=30]ADA 2018[/size] \n \n \n \n \n \n \n \n \n \n \n \n [size=30]by NutriTeam[/size] '
+        halign: 'center'
+        markup: True
+        background_normal: 'background.png'
+        background_down: 'background.png'
+        on_press: root.manager.current = 'Product Screen'
