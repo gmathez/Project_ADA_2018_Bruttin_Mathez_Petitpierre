@@ -12,6 +12,7 @@
                 text: 'Input BarCode or Product Name'
                 font_size: 30
                 multiline: False
+                on_text_validate: root.ids.rv.upload(root.ids.query.text, root.ids.raw.active)
                 on_focus: self.text = 'Input BarCode or Product Name' if self.text == '' else self.text
                 on_touch_down: self.delete_selection(self.select_all()) if self.text == 'Input BarCode or Product Name' else True
             BoxLayout:

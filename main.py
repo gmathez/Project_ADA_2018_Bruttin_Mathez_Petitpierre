@@ -72,12 +72,19 @@ class RV(RecycleView):
         if active:
             pass
         else:
-            isinside =  self.df['product_name'].str.contains(query, case=False)
+            isinside = self.df['product_name'].str.contains('', case=False)
+            for item in query.split():
+                isinside = isinside & self.df['product_name'].str.contains(item, case=False)
             if any(isinside):
                 selection = self.df[isinside]
                 self.data = [{'text': str(row[1]) + '  -  ' +str(row[2]), 'font_size': 20} for row in selection.itertuples()]
             else:
-                self.data = [{'text' : 'No product found'}]
+                isinside = self.df['code'].str.match(query, case=False)
+                if any(isinside):
+                    selection = self.df[isinside]
+                    self.data = [{'text': str(row[1]) + '  -  ' +str(row[2]), 'font_size': 20} for row in selection.itertuples()]
+                else:
+                    self.data = [{'text' : 'No product found'}]
 
 class ScreenHome(Screen):
     pass
