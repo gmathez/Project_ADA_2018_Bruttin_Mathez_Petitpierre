@@ -17,6 +17,7 @@ from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.togglebutton import ToggleButton
 
 Builder.load_file('manager.kv')
 Builder.load_file('screenhome.kv')
@@ -31,7 +32,7 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
     ''' Adds selection and focus behaviour to the view. '''
 
 
-class SelectableLabel(RecycleDataViewBehavior, Label):
+class SelectableButton(RecycleDataViewBehavior, Label):
     ''' Add selection support to the Label '''
     index = None
     selected = BooleanProperty(False)
@@ -40,12 +41,12 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
         self.index = index
-        return super(SelectableLabel, self).refresh_view_attrs(
+        return super(SelectableButton, self).refresh_view_attrs(
             rv, index, data)
 
     def on_touch_down(self, touch):
         ''' Add selection on touch down '''
-        if super(SelectableLabel, self).on_touch_down(touch):
+        if super(SelectableButton, self).on_touch_down(touch):
             return True
         if self.collide_point(*touch.pos) and self.selectable:
             return self.parent.select_with_touch(self.index, touch)
@@ -62,7 +63,7 @@ class Grid(GridLayout):
     #         self.add_widget(Label(text=heading))
 
 class RV(RecycleView):
-    grid = RecycleGridLayout
+    
     df = pd.read_csv('../data/data_food_final.csv')
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
@@ -90,13 +91,30 @@ class ScreenHome(Screen):
     pass
 
 class ScreenProduct(Screen):
-    pass
+    temp_dict = {}
+    def getSelection(self, text, state):
+        if state:
+            self.temp_dict['code'] = text
+        else:
+            self.temp_dict['code'] = ''
+
+
 
 class ScreenQuantities(Screen):
     pass
 
 class Manager(ScreenManager):
-    pass
+    selected_products = {'product': [], 'quantity': []} 
+
+    def addProduct(self):
+        self.selected_products['product'].append(self.ids.screen_product.temp_dict['code'])
+        print(self.selected_products)
+
+    def deleteProduct(self):
+        item = self.ids.screen_product.temp_dict['code']
+        if item in self.selected_products['product']:
+            self.selected_products['product'].remove(item)
+        print(self.selected_products)
 
 class NutriScoreApp(App):
     def build(self):

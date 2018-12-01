@@ -42,10 +42,14 @@
             Button:
                 text: 'Back'
                 on_press: root.manager.current = 'Home Screen'
+            
+            Button:
+                text: 'Remove'
+                on_press: root.manager.deleteProduct()
 
             Button:
                 text: 'Add'
-                on_press: root.ids.rv.upload(root.ids.query.text, root.ids.raw.active)
+                on_press: root.manager.addProduct()
 
             Button:
                 text: 'Validate'

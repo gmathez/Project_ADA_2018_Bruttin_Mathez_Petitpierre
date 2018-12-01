@@ -1,15 +1,18 @@
 #:kivy 1.10.0
 
-<SelectableLabel>:
+<SelectableButton>:
     # Draw a background to indicate selection
+    #group: 'selection'
     canvas.before:
         Color:
             rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
         Rectangle:
             pos: self.pos
             size: self.size
+    on_selected: root.parent.parent.parent.parent.getSelection(self.text, self.selected) if root.parent != None else False
+
 <RV>:
-    viewclass: 'SelectableLabel'
+    viewclass: 'SelectableButton'
            
     SelectableRecycleBoxLayout:
         default_size: None, dp(56)
