@@ -9,15 +9,10 @@ from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.togglebutton import ToggleButton
 
 Builder.load_file('manager.kv')
 Builder.load_file('screenhome.kv')
@@ -55,13 +50,6 @@ class SelectableButton(RecycleDataViewBehavior, Label):
         ''' Respond to the selection of items in the view. '''
         self.selected = is_selected
 
-class Grid(GridLayout):
-    pass
-    # def __init__(self, **kwargs):
-    #     df = pd.read_csv('./data/Sample_data_food.csv')
-    #     for heading in df.columns:
-    #         self.add_widget(Label(text=heading))
-
 class RV(RecycleView):
     
     df = pd.read_csv('../data/data_food_final.csv')
@@ -91,7 +79,7 @@ class ScreenHome(Screen):
     pass
 
 class ScreenProduct(Screen):
-    temp_dict = {}
+    temp_dict = {'code':''}
     def getSelection(self, text, state):
         if state:
             self.temp_dict['code'] = text
@@ -107,7 +95,9 @@ class Manager(ScreenManager):
     selected_products = {'product': [], 'quantity': []} 
 
     def addProduct(self):
-        self.selected_products['product'].append(self.ids.screen_product.temp_dict['code'])
+        item = self.ids.screen_product.temp_dict['code']
+        if item != '':
+            self.selected_products['product'].append(item)
         print(self.selected_products)
 
     def deleteProduct(self):
