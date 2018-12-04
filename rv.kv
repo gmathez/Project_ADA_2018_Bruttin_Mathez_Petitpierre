@@ -1,6 +1,6 @@
 #:kivy 1.10.0
 
-<SelectableButton>:
+<SelectableGrid>:
     # Draw a background to indicate selection
     #group: 'selection'
     canvas.before:
@@ -9,11 +9,81 @@
         Rectangle:
             pos: self.pos
             size: self.size
-    on_selected: root.parent.parent.parent.parent.getSelection(self.text, self.selected) if root.parent != None else False
+    pos: self.pos
+    size: self.size
+    cols: 3
+    on_selected: root.parent.parent.parent.parent.getSelection(root.ids['id_label1'].text, root.ids['id_label2'].text, self.selected) if root.parent != None else False
+    TextInput:
+        id: id_label1
+        text: ''
+        size_hint: .25,1
+        disabled: True
+        readonly: True
+        font_color: [1, 1, 1, 1]
+        background_color: [0, 0, 0, 0.5]
+        disabled_foreground_color: [1, 1, 1, 1]
+    TextInput:
+        id: id_label2
+        text:''
+        size_hint: .5,1
+        disabled: True
+        readonly: True
+        font_color: [1, 1, 1, 1]
+        background_color: [0, 0, 0, 0.5]
+        disabled_foreground_color: [1, 1, 1, 1]
+    TextInput:
+        id: id_label3
+        text:''
+        size_hint: .25, 1
+        disabled: True
+        readonly: True
+        font_color: [1, 1, 1, 1]
+        background_color: [0, 0, 0, 0.5]
+        disabled_foreground_color: [1, 1, 1, 1]
 
-<RV>:
-    viewclass: 'SelectableButton'
-           
+<SelectableQuantity>:
+    # Draw a background to indicate selection
+    #group: 'selection'
+    canvas.before:
+        Color:
+            rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    pos: self.pos
+    size: self.size
+    cols: 3
+    TextInput:
+        id: id_label1
+        text: ''
+        size_hint: .25,1
+        disabled: True
+        readonly: True
+        font_color: [1, 1, 1, 1]
+        background_color: [0, 0, 0, 0.5]
+        disabled_foreground_color: [1, 1, 1, 1]
+    TextInput:
+        id: id_label2
+        text:''
+        size_hint: .5,1
+        disabled: True
+        readonly: True
+        font_color: [1, 1, 1, 1]
+        background_color: [0, 0, 0, 0.5]
+        disabled_foreground_color: [1, 1, 1, 1]
+    TextInput:
+        id: id_label3
+        text:''
+        size_hint: .25, 1
+        disabled: False
+        readonly: False
+        font_color: [1, 1, 1, 1]
+        background_color: [1, 1, 1, 1]
+        font_size: 20
+        input_filter: 'int' 
+        multiline: False
+
+<RV>:           
     SelectableRecycleBoxLayout:
         default_size: None, dp(56)
         default_size_hint: 1, None

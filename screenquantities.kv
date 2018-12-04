@@ -2,9 +2,32 @@
 
 <ScreenQuantities>:
     BoxLayout:
-        orientation: 'horizontal'
+        orientation: 'vertical'
         Label:
-            text: '2nd screen'
+            text: 'Enter the quantities in grams'
+            font_size: 25
+            size_hint: 1,.25
+        
+        GridLayout:
+            size_hint: 1,.15
+            cols:3
+            rows:1
+            Label:
+                text: 'Code'
+                font_size: 25
+                size_hint: .25,1
+            Label:
+                text: 'Product'
+                font_size: 25
+                size_hint: .5, 1
+            Label:
+                text: 'Quantity [g or ml]'
+                font_size: 25
+                size_hint: .25,1
+        RV:
+            id: rv
+            viewclass: 'SelectableQuantity'
         Button:
             text: 'to 1st screen'
             on_press: root.manager.current = 'Product Screen'
+            size_hint: 1,.25
