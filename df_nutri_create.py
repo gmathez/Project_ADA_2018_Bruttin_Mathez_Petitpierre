@@ -1,5 +1,6 @@
 import pandas as pd
 import computeNutriScore as nutri
+from API_US_agri import fill_from_Api
 
 def create_dataframe(list_product, data_food):
 	column_for_data_food = ['product_name','categories_tags','energy_100g','fat_100g',
@@ -11,7 +12,7 @@ def create_dataframe(list_product, data_food):
 	for barcode, quantites in list_product:
 		df_product = df_product.append(data_food.loc[barcode])
 		df_product.loc[barcode, 'quantites'] = quantites
-	return df_product
+	return df_product[column_for_data_food]
 
 def multpliply_quantites(df_product):
 	for index in range(len(df_product)):
@@ -78,18 +79,40 @@ def normalize_df(df_product_sum):
 	else:
 		return df_product_sum
 
+def api_fill(df_product, Api_list):
+	df_product_api = df_product.copy()
+	for name, quantites in Api_list:
+		product = fill_from_Api(name)
+		product['quantites'] = quantites
+		df_product_api = df_product_api.append(product)
+		
+	return df_product_api
 
-def main_nutri(list_product, data_food):
+
+def main_nutri(list_product, data_food, Api_list):
 
 	df_product = create_dataframe(list_product, data_food)
+	df_product = api_fill(df_product, Api_list)
 	df_product = clean_fruit_case(df_product)
 	df_product = multpliply_quantites(df_product)
+
+	df_product_sum = sum_dataframe(df_product)
+
+	Fiber_quantites = df_product_sum['fiber_100g'][0]
+	Sodium_quantites = df_product_sum['sodium_100g'][0]
+	Protein_quantites = df_product_sum['proteins_100g'][0]
+	Energy_quantites = df_product_sum['energy_100g'][0]
+	Glucide_quantites = df_product_sum['sugars_100g'][0]
+	Lipid_quantites = df_product_sum['fat_100g'][0]
+
 
 	df_beverages, df_non_beverages = separate_dataframe(df_product)
 	df_water, df_non_water = separate_water(df_beverages)
 	df_non_beverages = clean_protein_case(df_non_beverages)
 
 	df_beverages_tot = sum_dataframe(df_non_water)
+	df_water_tot = sum_dataframe(df_water)
+	beverages_quantites = df_beverages_tot['quantites'][0] + df_water_tot['quantites'][0]
 	df_non_beverages_tot = sum_dataframe(df_non_beverages)
 
 	df_beverages_tot_norm = normalize_df(df_beverages_tot)
@@ -106,34 +129,18 @@ def main_nutri(list_product, data_food):
 	else:
 		final_score_Non_Beverages, NutriScore_Non_Beverages = None, None
 
-	return final_score_Beverages, NutriScore_Beverages,\
-   			final_score_Non_Beverages, NutriScore_Non_Beverages,\
-   			 df_water, df_product, df_beverages_tot, df_non_beverages_tot
+	Dict_ = {
+	'Score_Beverages' : final_score_Beverages,
+	'NutriScore_Beverages' : NutriScore_Beverages,
+	'Score_Non_Beverages' : final_score_Non_Beverages,
+	'NutriScore_Non_Beverages' : NutriScore_Non_Beverages,
+	'Beverages_quantites' : beverages_quantites,
+	'Fiber' : Fiber_quantites,
+	'Sodium' : Sodium_quantites,
+	'Protein' : Protein_quantites,
+	'Energy' : Energy_quantites,
+	'Sugar' : Glucide_quantites,
+	'Fat' : Lipid_quantites
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	return df_water, df_product, df_beverages_tot, df_non_beverages_tot, Dict_
