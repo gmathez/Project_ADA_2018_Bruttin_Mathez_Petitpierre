@@ -19,7 +19,7 @@ def multpliply_quantites(df_product):
 		quantites = df_product.iat[index, 12]
 		for column in range(2, len(df_product.columns)):
 			if (df_product.columns[column] != 'quantites'):
-				df_product.iat[index, column] = df_product.iat[index, column] * quantites
+				df_product.iat[index, column] = df_product.iat[index, column]  * quantites / 100
 	return df_product
 
 
@@ -120,7 +120,7 @@ def main_nutri(list_product, data_food, Api_list):
 	if (df_beverages_tot_norm['categories_tags'][0] != 0) & len(df_non_water) > 0:
 		final_score_Beverages = nutri.computeScoreBeverages(df_beverages_tot_norm)
 		NutriScore_Beverages = nutri.getNutriScoreBeverages(final_score_Beverages, df_beverages_tot_norm)
-	elif (len(df_non_water) = 0) & (len(df_water) > 0):
+	elif (len(df_non_water) == 0) & (len(df_water) > 0):
 		final_score_Beverages, NutriScore_Beverages = -999, 'a'
 	else:
 		final_score_Beverages, NutriScore_Beverages = None, None

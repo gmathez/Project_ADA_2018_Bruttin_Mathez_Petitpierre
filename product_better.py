@@ -65,7 +65,7 @@ def find_healthier_product(product_tuple, df, dic_tag):
     if best_tags != None:
         best_tag = best_tags[0]
     else:
-        return False, best_product, best_sc, best_code, old_sc, new_gr
+        return False, best_product, best_sc, best_code, old_sc, old_gr, new_gr
     
     # Take the products which are of the same kind as the product we want to fill
     df_similar = df[df.categories_tags.str.contains(best_tag, case = False)]
