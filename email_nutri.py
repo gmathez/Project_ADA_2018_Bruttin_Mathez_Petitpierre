@@ -11,11 +11,12 @@ def Send(TO, MSG):
 	server.sendmail('NutriTeamADA@gmail.com', TO, MSG)
 	server.quit()
 
-def Send_Recommandation(TO, text):
+def Send_rec(TO, text):
         msg = MIMEMultipart()
         msg['From'] = 'NutriTeamADA@gmail.com'
         msg['To'] = TO
-        msg['Cc'] = 'NutriTeamADA@gmail.com'
-        msg['Subject'] = "NutriTeamADA : Recommandation"
-        msg.attach((MIMEText(str(text), 'plain')))
-        Send(['NutriTeamADA@gmail.com', TO], msg.as_string())
+        #msg['Cc'] = 'NutriTeamADA@gmail.com'
+        msg['Subject'] = "NutriTeamADA : Report"
+        msg.attach((MIMEText(str(text), 'html')))
+        #Send(['NutriTeamADA@gmail.com', TO], msg.as_string())
+        Send([TO], msg.as_string())
