@@ -56,6 +56,7 @@ def find_healthier_product(product_tuple, df, dic_tag):
     best_product = product
     best_sc = product['Predicted_NutriScore_score']
     old_sc = best_sc
+    old_gr = product['Predicted_NutriScore_grade'].upper()
     
     # Catch the best tag of the product
     tags = product.categories_tags.split(',')
@@ -78,22 +79,23 @@ def find_healthier_product(product_tuple, df, dic_tag):
             best_product = df_similar.loc[ind]
             best_code = ind 
             replaced = True
+            new_gr = best_product['Predicted_NutriScore_grade'].upper()
        
-    return replaced, best_product, best_sc, best_code, old_sc
+    return replaced, best_product, best_sc, best_code, old_sc, old_gr, new_gr
 
 def Better_product_rec(list_product, df):
-    text = '<h2 style="color:#3C627E"> Healthier Product </h2><br>'
+    text = '<h2 style="color:#3C627E"> Healthier Product </h2>'
     dic_tag = list_df_tags(df)
     for product in list_product:
-        replaced, ideal_product, ideal_nutriscore, ideal_code, old_score = find_healthier_product(product, df, dic_tag)
+        replaced, ideal_product, ideal_nutriscore, ideal_code, old_score, old_gr, new_gr = find_healthier_product(product, df, dic_tag)
         if replaced:
-            text = text + '''We suggest to you to replace the product "{}" by this other product 
-            "<a href="https://world.openfoodfacts.org/product/{}" target="_blank">{}</a> that has a better Nutri-Score.
-            Your product has a score of {} and the one that we suggest to you has a score of {}.<br>'''\
+            text = text + '''<p>We suggest to you to replace the product "{}" by this other product 
+            <a href="https://world.openfoodfacts.org/product/{}" target="_blank">{}</a> that has a better Nutri-Score.
+            Your product has a grade of {} and the one that we suggest to you has a grade of {}.</p>'''\
             .format(df.loc[product[0]][0], ideal_code, ideal_product[0] + ' (' + ideal_product[-1] + ')',\
-            old_score, ideal_nutriscore)
+            old_gr, new_gr)
         else:
-            text = text + '''Your product "{}" is the best in its category.<br>'''.format(df.loc[product[0]][0])
+            text = text + '''<p>Your product "{}" is the best in its category.</p>'''.format(df.loc[product[0]][0])
 
     return text
 

@@ -16,7 +16,7 @@ def Send_rec(TO, text):
         msg['From'] = 'NutriTeamADA@gmail.com'
         msg['To'] = TO
         #msg['Cc'] = 'NutriTeamADA@gmail.com'
-        msg['Subject'] = "NutriTeamADA : Recommandation"
+        msg['Subject'] = "NutriTeamADA : Report"
         msg.attach((MIMEText(str(text), 'html')))
         #Send(['NutriTeamADA@gmail.com', TO], msg.as_string())
         Send([TO], msg.as_string())

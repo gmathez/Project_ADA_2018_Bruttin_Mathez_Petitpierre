@@ -143,4 +143,5 @@ def main_nutri(list_product, data_food, Api_list):
 	'Fat' : Lipid_quantites
 	}
 
-	return df_water, df_product, df_beverages_tot, df_non_beverages_tot, Dict_
+	#return df_water, df_product, df_beverages_tot, df_non_beverages_tot, Dict_
+	return Dict_
