@@ -4,7 +4,31 @@
     BoxLayout:
         orientation: 'vertical'
 
-        Button:
-            text: 'Thats all, folks'
-            font_size: 25
-            on_press: root.manager.current = 'Settings Screen'
+        Label:
+            text: 'Results'
+            font_size: 40
+
+        Label:
+            id: beverages
+            text: ''
+            font_size: 30
+
+        Label:
+            id: non_beverages
+            text: ''
+            font_size: 30
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1,.25
+
+            AnchorLayout:
+                anchor_x: 'left'
+                anchor_y: 'bottom'
+
+                Button:
+                    id: back
+                    size_hint: .5, 1
+                    text: 'Back'
+                    font_size: 25
+                    on_press: root.manager.current = 'Settings Screen'

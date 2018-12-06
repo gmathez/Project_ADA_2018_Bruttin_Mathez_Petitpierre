@@ -286,10 +286,9 @@ class Manager(ScreenManager):
         dict_product = {'Product': [(str(self.selected_products['code'][index]), \
             int(self.selected_products['quantity'][index])) \
                 for index in range(len(self.selected_products['code']))], 'API': []}
-        print(dict_product)
         score_beverages, score_nonbeverages =  algo(dict_product, self.settings, self.df)
-        print(score_beverages)
-        print(score_nonbeverages)
+        self.ids.screen_final.ids.beverages.text = score_beverages
+        self.ids.screen_final.ids.non_beverages.text = score_nonbeverages
 
 class NutriScoreApp(App):
 
