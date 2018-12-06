@@ -423,23 +423,23 @@ def Rec_text(Male, Age, Exercice, Days, Weight, Dict_):
 	Sugar = Sugar_text(Sugar_quantites, Days)
 	Sodium = Sodium_text(Age, Sodium_quantites, Days)
 
-	text = '<h2 style="color:#3C627E"> Recommendation </h2><br>'
-	text_energy = '<h3 style="color:#008080">Energy</h3>' + Energy + '<br>'
-	text_lipid = '<h3 style="color:#008080">Lipid</h3>' + Lipid + '<br>'
-	text_prot = '<h3 style="color:#008080">Protein</h3>' + Prot + '<br>'
-	text_water = '<h3 style="color:#008080">Water</h3>' + Water + '<br>'
-	text_fiber = '<h3 style="color:#008080">Fiber</h3>' + Fiber + '<br>'
-	text_sugar = '<h3 style="color:#008080">Sugar</h3>' + Sugar + '<br>'
-	text_sodium = '<h3 style="color:#008080">Salt</h3>' + Sodium + '<br>'
+	text = '<h2 style="color:#3C627E"> Recommendation </h2>'
+	text_energy = '<h3 style="color:#008080">Energy</h3>' + Energy
+	text_lipid = '<h3 style="color:#008080">Lipid</h3>' + Lipid
+	text_prot = '<h3 style="color:#008080">Protein</h3>' + Prot
+	text_water = '<h3 style="color:#008080">Water</h3>' + Water
+	text_fiber = '<h3 style="color:#008080">Fiber</h3>' + Fiber
+	text_sugar = '<h3 style="color:#008080">Sugar</h3>' + Sugar
+	text_sodium = '<h3 style="color:#008080">Salt</h3>' + Sodium
 
-	text_end = '''<h5 style="color:#66CDAA">Information<h5>The recommendation was provided according to 
+	text_end = '''<h4 style="color:#3C627E">Information</h4><p>The recommendation was provided according to 
 	<a href="http://www.sge-ssn.ch/fr/science-et-recherche/denrees-alimentaires-et-nutriments/recommandations-nutritionnelles/valeurs-de-reference-dach/" target="_blanck"
 	>Société Suisse de Nutrition (SSN) [in French/Deutch/Italian]</a>. We do not provided to you supplementary information
 	about vitamines or additiv. For the vitamins you can check on the SSN website. About the additiv that can appear into your products,
 	we suggest to you to see <a href="https://pages.rts.ch/emissions/abe/1371092-liste-des-principaux-additifs-alimentaires.html" target="_blanck">
 	A Bon Entendeur (RTS) [in French]</a>. Also if you are pregnant or athletic, some other recommendation can be applied.
 	These recommendations are not for medical use and was compute from <a href="https://world.openfoodfacts.org/" target="_blanck">
-	Open Food Facts</a> database.<br>'''
+	Open Food Facts</a> database.</p>'''
 
 	return text + text_energy + text_sugar + text_lipid + text_prot + text_fiber + text_sodium + text_water + text_end
 	

@@ -117,13 +117,15 @@ def main_nutri(list_product, data_food, Api_list):
 
 	df_beverages_tot_norm = normalize_df(df_beverages_tot)
 	df_non_beverages_tot_norm = normalize_df(df_non_beverages_tot)
-	if df_beverages_tot_norm['categories_tags'][0] != 0:
+	if (df_beverages_tot_norm['categories_tags'][0] != 0) & len(df_non_water) > 0:
 		final_score_Beverages = nutri.computeScoreBeverages(df_beverages_tot_norm)
 		NutriScore_Beverages = nutri.getNutriScoreBeverages(final_score_Beverages, df_beverages_tot_norm)
+	elif (len(df_non_water) = 0) & (len(df_water) > 0):
+		final_score_Beverages, NutriScore_Beverages = -999, 'a'
 	else:
 		final_score_Beverages, NutriScore_Beverages = None, None
 
-	if df_non_beverages_tot_norm['categories_tags'][0] != 0:
+	if (df_non_beverages_tot_norm['categories_tags'][0] != 0) & (len(df_non_beverages) > 0):
 		final_score_Non_Beverages = nutri.computeScore(df_non_beverages_tot_norm)
 		NutriScore_Non_Beverages = nutri.getNutriScore(final_score_Non_Beverages)
 	else:
