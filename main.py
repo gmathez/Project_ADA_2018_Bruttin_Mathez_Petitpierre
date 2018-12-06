@@ -242,7 +242,7 @@ class Manager(ScreenManager):
     selected_products = {'code': [], 'product_name': [], 'quantity': []}
     settings = {'Rec': True, 'Name': '', 'Surname': '', 'Email': '', 'Age': 0, 'Sex': True, 'Pal': 0, \
             'Weight': 0, 'Day': 0}
-    df = pd.read_csv('../data/OpenFoodFacts_final.csv', low_memory=False)
+    df = pd.read_csv('../data/OpenFoodFacts_final.csv', low_memory=False, index_col = [0])
 
     def addProduct(self):
         item1 = self.ids.screen_product.temp_dict['code']
@@ -282,14 +282,17 @@ class Manager(ScreenManager):
         self.settings['Sex'] = data['sex']
         self.settings['Age'] = data['age']
 
-    def computation(self)
-        dict_product = {'Product': zip(self.selected_products['code'], \
-                self.selected_products['quantity']), 'API': []}
+    def computation(self):
+        dict_product = {'Product': [(str(self.selected_products['code'][index]), \
+            int(self.selected_products['quantity'][index])) \
+                for index in range(len(self.selected_products['code']))], 'API': []}
+        print(dict_product)
         score_beverages, score_nonbeverages =  algo(dict_product, self.settings, self.df)
         print(score_beverages)
         print(score_nonbeverages)
 
 class NutriScoreApp(App):
+
     def build(self):
         return Manager()
 
