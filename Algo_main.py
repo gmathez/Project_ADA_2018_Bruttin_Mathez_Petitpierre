@@ -20,7 +20,7 @@ def  color_(grade):
 
 
 
-def algo_(dict_prod, dict_set, df):
+def algo(dict_prod, dict_set, df):
 	dict_nutri = nutri.main_nutri(dict_prod['Product'], df, dict_prod['API'])
 
 	if dict_nutri['NutriScore_Beverages'] != None:
