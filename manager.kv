@@ -6,6 +6,8 @@
     screen_home: screen_home
     screen_product: screen_product
     screen_quantities: screen_quantities
+    screen_settings: screen_settings
+    screen_final: screen_final
 
     ScreenHome:
         id: screen_home
@@ -21,4 +23,15 @@
         id: screen_quantities
         name: 'Quantities Screen'
         manager: screen_manager
-        on_enter: root.ids.screen_quantities.ids.rv.getQuantities(root.selected_products)
+        on_enter: root.ids.screen_quantities.initQuantity(root.selected_products)
+    
+    ScreenSettings:
+        id: screen_settings
+        name: 'Settings Screen'
+        manager: screen_manager
+
+    ScreenFinal:
+        id: screen_final
+        name: 'Final Screen'
+        manager: screen_manager
+        on_enter: root.computation()

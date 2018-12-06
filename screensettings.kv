@@ -1,0 +1,160 @@
+#:kivy 1.10.0
+
+<ScreenSettings>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: 'Complete this form for dietetic advice'
+            font_size: 25
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            TextInput:
+                id: name
+                text: ''
+                hint_text: 'Name'
+                font_size: 25
+                multiline: False
+                background_color: [0, 0, 0, 0]
+                foreground_color: [1, 1, 1, 1]
+            
+            TextInput:
+                id: surname
+                text: ''
+                hint_text: 'Surname'
+                font_size: 25
+                multiline: False
+                foreground_color: [1, 1, 1, 1]
+                background_color: [0, 0, 0, 0]   
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            TextInput:
+                id: age
+                text: ''
+                hint_text: 'Age'
+                input_filter: 'int'
+                font_size: 25
+                multiline: False
+                foreground_color: [1, 1, 1, 1]
+                background_color: [0, 0, 0, 0]
+
+            BoxLayout:
+                orientation: 'vertical'
+
+                Label:
+                    id: sex
+                    text: 'Sex'
+
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    Label:
+                        text: 'Female'
+                    
+                    Label:
+                        text: 'Male'
+                          
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    CheckBox:
+                        id: female
+                        group: 'sex'
+                    
+                    CheckBox:
+                        id: male
+                        group: 'sex'
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            TextInput:
+                id: email
+                text: ''
+                hint_text: 'E-Mail'
+                font_size: 25
+                multiline: False
+                foreground_color: [1, 1, 1, 1]
+                background_color: [0, 0, 0, 0]
+
+            TextInput:
+                id: weight
+                text: ''
+                hint_text: 'Weight [kg]'
+                font_size: 25
+                input_filter: 'int'
+                multiline: False
+                foreground_color: [1, 1, 1, 1]
+                background_color: [0, 0, 0, 0]
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            BoxLayout:
+                orientation: 'vertical'
+
+                Label:
+                    id: activity
+                    text: 'Professional Activity'
+
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    Label:
+                        text: 'Mainly Seated'
+                    
+                    Label:
+                        text: 'Seated and Standing'
+                    
+                    Label:
+                        text: 'Mainyl Standing'
+                          
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    CheckBox:
+                        id: seated
+                        group: 'activity'
+                    
+                    CheckBox:
+                        id: both
+                        group: 'activity'
+
+                    CheckBox:
+                        id: standing
+                        group: 'activity'
+
+            TextInput:
+                id: days
+                text: ''
+                hint_text: 'Days'
+                font_size: 25
+                input_filter: 'int'
+                multiline: False
+                foreground_color: [1, 1, 1, 1]
+                background_color: [0, 0, 0, 0]
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                text: 'Back'
+                on_press: root.manager.current = 'Quantities Screen'
+
+            Button:
+                text: 'Pass'
+                on_press: root.changeScreen(False)
+
+            Button:
+                text: 'Validate'
+                on_press: root.changeScreen(True)        
+
+
+
+
+

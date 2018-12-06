@@ -19,7 +19,6 @@
         size_hint: .25,1
         disabled: True
         readonly: True
-        font_color: [1, 1, 1, 1]
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
     TextInput:
@@ -28,7 +27,6 @@
         size_hint: .5,1
         disabled: True
         readonly: True
-        font_color: [1, 1, 1, 1]
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
     TextInput:
@@ -37,51 +35,43 @@
         size_hint: .25, 1
         disabled: True
         readonly: True
-        font_color: [1, 1, 1, 1]
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
 
 <SelectableQuantity>:
     # Draw a background to indicate selection
     #group: 'selection'
-    canvas.before:
-        Color:
-            rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
-        Rectangle:
-            pos: self.pos
-            size: self.size
     pos: self.pos
     size: self.size
     cols: 3
     TextInput:
         id: id_label1
-        text: ''
+        hint_text:'0'
         size_hint: .25,1
         disabled: True
         readonly: True
-        font_color: [1, 1, 1, 1]
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
     TextInput:
         id: id_label2
-        text:''
+        hint_text:'0'
         size_hint: .5,1
         disabled: True
         readonly: True
-        font_color: [1, 1, 1, 1]
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
     TextInput:
         id: id_label3
-        text:''
+        suggestion_text:'0'
         size_hint: .25, 1
         disabled: False
         readonly: False
-        font_color: [1, 1, 1, 1]
         background_color: [1, 1, 1, 1]
         font_size: 20
         input_filter: 'int' 
         multiline: False
+        on_text: root.parent.parent.parent.parent.updateQuantity(root.index, id_label1.text, id_label2.text, self.text) if root.parent != None else False
+
 
 <RV>:           
     SelectableRecycleBoxLayout:
