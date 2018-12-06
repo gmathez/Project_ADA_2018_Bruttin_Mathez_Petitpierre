@@ -2,7 +2,7 @@ from numpy import isnan
 
 def getFruits(product):
     if ~ isnan(product['fruits-vegetables-nuts_100g'])[0]:
-        fruits_content = product ['fruits-vegetables-nuts_100g'][0]
+        fruits_content = product['fruits-vegetables-nuts_100g'][0]
     elif ~ isnan(product['fruits-vegetables-nuts-estimate_100g'])[0]:
         fruits_content = product['fruits-vegetables-nuts-estimate_100g'][0]
     elif product.categories_tags.str.contains('juices-and-nectars', case=False)[0]:
@@ -74,7 +74,6 @@ def computeFibersScore(product):
         fibers_score = 4
     else: 
         fibers_score = 5
-    
     return fibers_score
 
 def computeProteinsScore(product):

@@ -2,6 +2,7 @@ import Rec_nutri as reco
 import email_nutri as email
 import df_nutri_create as nutri
 import product_better as prod_bet
+import Product_taken as prod_tak 
 
 def  color_(grade):
 	if grade == 'a':
@@ -38,6 +39,7 @@ def algo(dict_prod, dict_set, df):
 	if dict_set['Rec']:
 		text_rec = reco.Rec_text(dict_set['Sex'], dict_set['Age'], dict_set['Pal'], dict_set['Day'], dict_set['Weight'], dict_nutri)
 		text_healthier_prod = prod_bet.Better_product_rec(dict_prod['Product'], df)
+		text_prod = prod_tak.product_list(dict_prod['Product'], df, dict_prod['API'])
 
 		text_head = '''<head><h1 style="color:#193086">Expanding Nutri-Score  : take your menu to the next level</h1>
 		<h3 style="color:white">ADA 2018 - by NutriTeam</h3></head>'''
@@ -54,7 +56,7 @@ def algo(dict_prod, dict_set, df):
 
 
 
-		text = text_head + text_welcome + text_nutri + text_rec + text_healthier_prod + text_end
+		text = text_head + text_welcome + text_nutri + text_rec + text_healthier_prod + text_prod + text_end
 		email.Send_rec(dict_set['Email'], text)
 
 	return (Nutri_beve_text,  Nutri_food_text)

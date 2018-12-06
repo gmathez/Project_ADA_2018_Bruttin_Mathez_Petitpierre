@@ -1,5 +1,5 @@
 import pandas as pd
-import computeNutriScore as nutri
+import computeNutriScore as nutri_sc
 from API_US_agri import fill_from_Api
 
 def create_dataframe(list_product, data_food):
@@ -47,9 +47,9 @@ def separate_water(df_beverages):
 
 
 def protein_to_zero(product):
-	neg =  nutri.computeNegativePoints(product)
-	fruits = nutri.computeFruitsScore(product)
-	fibers = nutri.computeFibersScore(product)
+	neg =  nutri_sc.computeNegativePoints(product)
+	fruits = nutri_sc.computeFruitsScore(product)
+	fibers = nutri_sc.computeFibersScore(product)
 	if neg < 11 or fruits == 5 or product.categories_tags.str.contains('cheese', case=False)[0]:
 		return False
 	else:
@@ -65,7 +65,7 @@ def clean_protein_case(df_non_beverages):
 def clean_fruit_case(df_product):
 	df_product_fruit_complete = df_product.copy()
 	for index in range(len(df_product_fruit_complete)):
-		df_product_fruit_complete.iat[index, 8] = nutri.getFruits(df_product_fruit_complete.iloc[[index]]) #Real Fruits
+		df_product_fruit_complete.iat[index, 8] = nutri_sc.getFruits(df_product_fruit_complete.iloc[[index]]) #Real Fruits
 	return df_product_fruit_complete
 
 def normalize_df(df_product_sum):
@@ -74,7 +74,7 @@ def normalize_df(df_product_sum):
 	if quantites_tot > 0:
 		columns_df = df_normalize.columns
 		for column in range(2, len(columns_df)):
-			df_normalize[columns_df[column]] = df_normalize[columns_df[column]][0] / quantites_tot
+			df_normalize[columns_df[column]] = df_normalize[columns_df[column]][0] * 100/ quantites_tot
 		return df_normalize
 	else:
 		return df_product_sum
@@ -104,6 +104,7 @@ def main_nutri(list_product, data_food, Api_list):
 	Energy_quantites = df_product_sum['energy_100g'][0]
 	Glucide_quantites = df_product_sum['sugars_100g'][0]
 	Lipid_quantites = df_product_sum['fat_100g'][0]
+	Vegies_quantites = df_product_sum['fruits-vegetables-nuts_100g'][0] * 100/ df_product_sum['quantites'][0]
 
 
 	df_beverages, df_non_beverages = separate_dataframe(df_product)
@@ -112,22 +113,30 @@ def main_nutri(list_product, data_food, Api_list):
 
 	df_beverages_tot = sum_dataframe(df_non_water)
 	df_water_tot = sum_dataframe(df_water)
+
 	beverages_quantites = df_beverages_tot['quantites'][0] + df_water_tot['quantites'][0]
+
+	if beverages_quantites != 0:
+		Non_water_quantites = df_beverages_tot['quantites'][0] * 100 / beverages_quantites
+	else:
+		Non_water_quantites = 0
+
 	df_non_beverages_tot = sum_dataframe(df_non_beverages)
 
 	df_beverages_tot_norm = normalize_df(df_beverages_tot)
 	df_non_beverages_tot_norm = normalize_df(df_non_beverages_tot)
-	if (df_beverages_tot_norm['categories_tags'][0] != 0) & len(df_non_water) > 0:
-		final_score_Beverages = nutri.computeScoreBeverages(df_beverages_tot_norm)
-		NutriScore_Beverages = nutri.getNutriScoreBeverages(final_score_Beverages, df_beverages_tot_norm)
+
+	if (df_beverages_tot_norm['categories_tags'][0] != 0) & (len(df_non_water) > 0):
+		final_score_Beverages = nutri_sc.computeScoreBeverages(df_beverages_tot_norm)
+		NutriScore_Beverages = nutri_sc.getNutriScoreBeverages(final_score_Beverages, df_beverages_tot_norm)
 	elif (len(df_non_water) == 0) & (len(df_water) > 0):
 		final_score_Beverages, NutriScore_Beverages = -999, 'a'
 	else:
 		final_score_Beverages, NutriScore_Beverages = None, None
 
 	if (df_non_beverages_tot_norm['categories_tags'][0] != 0) & (len(df_non_beverages) > 0):
-		final_score_Non_Beverages = nutri.computeScore(df_non_beverages_tot_norm)
-		NutriScore_Non_Beverages = nutri.getNutriScore(final_score_Non_Beverages)
+		final_score_Non_Beverages = nutri_sc.computeScore(df_non_beverages_tot_norm)
+		NutriScore_Non_Beverages = nutri_sc.getNutriScore(final_score_Non_Beverages)
 	else:
 		final_score_Non_Beverages, NutriScore_Non_Beverages = None, None
 
@@ -137,6 +146,8 @@ def main_nutri(list_product, data_food, Api_list):
 	'Score_Non_Beverages' : final_score_Non_Beverages,
 	'NutriScore_Non_Beverages' : NutriScore_Non_Beverages,
 	'Beverages_quantites' : beverages_quantites,
+	'Soda_ratio' : Non_water_quantites,
+	'Fruits' : Vegies_quantites,
 	'Fiber' : Fiber_quantites,
 	'Sodium' : Sodium_quantites,
 	'Protein' : Protein_quantites,
