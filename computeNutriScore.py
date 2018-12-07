@@ -1,9 +1,10 @@
 from numpy import isnan
+import pandas as pd
 
 def getFruits(product):
-    if ~ isnan(product['fruits-vegetables-nuts_100g'])[0]:
+    if ~ product['fruits-vegetables-nuts_100g'].isnull()[0]:
         fruits_content = product['fruits-vegetables-nuts_100g'][0]
-    elif ~ isnan(product['fruits-vegetables-nuts-estimate_100g'])[0]:
+    elif ~ product['fruits-vegetables-nuts-estimate_100g'].isnull()[0]:
         fruits_content = product['fruits-vegetables-nuts-estimate_100g'][0]
     elif product.categories_tags.str.contains('juices-and-nectars', case=False)[0]:
         fruits_content = 100
