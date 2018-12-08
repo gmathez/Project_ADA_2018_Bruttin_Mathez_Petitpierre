@@ -22,7 +22,10 @@ def  color_(grade):
 
 
 def algo(dict_prod, dict_set, df):
-	dict_nutri = nutri.main_nutri(dict_prod['Product'], df, dict_prod['API'])
+	list_prod = [prod_quant for prod_quant in dict_prod['Product'] if prod_quant[1] != 0]
+	list_Api = [prod_quant for prod_quant in dict_prod['API'] if prod_quant[1] != 0]
+
+	dict_nutri = nutri.main_nutri(list_prod, df, list_Api)
 
 	if dict_nutri['NutriScore_Beverages'] != None:
 		Nutri_beve_text = 'Nutri-Score for your beverages : {} (with a total score of {})'\
@@ -39,7 +42,7 @@ def algo(dict_prod, dict_set, df):
 	if dict_set['Rec']:
 		text_rec = reco.Rec_text(dict_set['Sex'], dict_set['Age'], dict_set['Pal'], dict_set['Day'], dict_set['Weight'], dict_nutri)
 		text_healthier_prod = prod_bet.Better_product_rec(dict_prod['Product'], df)
-		text_prod = prod_tak.product_list(dict_prod['Product'], df, dict_prod['API'])
+		text_prod = prod_tak.product_list(list_prod, df, list_Api)
 
 		text_head = '''<head><h1 style="color:#193086">Expanding Nutri-Score  : take your menu to the next level</h1>
 		<h3 style="color:white">ADA 2018 - by NutriTeam</h3></head>'''

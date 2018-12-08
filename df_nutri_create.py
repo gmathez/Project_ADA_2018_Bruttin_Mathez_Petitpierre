@@ -130,7 +130,7 @@ def main_nutri(list_product, data_food, Api_list):
 		final_score_Beverages = nutri_sc.computeScoreBeverages(df_beverages_tot_norm)
 		NutriScore_Beverages = nutri_sc.getNutriScoreBeverages(final_score_Beverages, df_beverages_tot_norm)
 	elif (len(df_non_water) == 0) & (len(df_water) > 0):
-		final_score_Beverages, NutriScore_Beverages = -999, 'a'
+		final_score_Beverages, NutriScore_Beverages = '-', 'a'
 	else:
 		final_score_Beverages, NutriScore_Beverages = None, None
 
