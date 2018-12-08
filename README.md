@@ -28,26 +28,26 @@ With Milestone 2, we clean and fill the database that you can download [here (us
 
 ## List of internal milestones up until poster presentation
 ### User interface design
-* Develop an interface, so that the user can enter the aliments he eats into the program
-* For missing information, the user must be able to choose either to enter the data himself/herself, or to use the automatic reconstruction of the data by the closest foods at category level, or to use the automatic data query of the US Department of Agriculture
-* The interface must allow the user to enter the quantities consumed, for each food
-* The interface must optionally allow the user to indicate the period over which he/she has consumed these foods (snacks, meals, days, etc.)
+* Develop an interface, so that the user can enter the aliments he eats into the program ✓
+* For missing information, the user must be able to choose either to enter the data himself/herself, or to use the automatic reconstruction of the data by the closest foods at category level, or to use the automatic data query of the US Department of Agriculture ✓
+* The interface must allow the user to enter the quantities consumed, for each food ✓
+* The interface must optionally allow the user to indicate the period over which he/she has consumed these foods (snacks, meals, days, etc.) ✓
 ### Algorithm
-* Adapt the algorithm to take the quantities into account and to weight them in order to obtain a global indice
-* Adapt the algorithm to take into account the nutrients of the expanded Nutri-score
+* Adapt the algorithm to take the quantities into account and to weight them in order to obtain a global indice ✓
+* Adapt the algorithm to take into account the nutrients of the expanded Nutri-score ✓
 * Adapt the algorithm to determine if the quantity of food ingested during the specified time seems to be reasonable
-* Improve the robustness of the algorithm by improving error handling when erroneous or non-numerical values are entered by the user
-* Adapt the algorithm to compare the values entered with the nutritional recommandations and identify deficiencies, excesses and lack of diversity
+* Improve the robustness of the algorithm by improving error handling when erroneous or non-numerical values are entered by the user ✓
+* Adapt the algorithm to compare the values entered with the nutritional recommandations and identify deficiencies, excesses and lack of diversity ✓
 * Adapt the algorithm to be able to retrieve elements with the desired nutritional values, so that it can be suggested to the user
 ### Information design
-* The interface must present the user with the quantities of nutrients he/she has consumed
-* The user must receive an indicative assessment of the nutritional quality of his/her food (expanded Nutri-score)
-* The program must indicate to the user the main problems of his diet. Warn the user about nutritional deficiencies, excesses and lack of diversity
-* The user should receive suggestions for foods that could help to fill nutritional gaps and achieve healthier eating habits
+* The interface must present the user with the quantities of nutrients he/she has consumed ✓
+* The user must receive an indicative assessment of the nutritional quality of his/her food (expanded Nutri-score) ✓
+* The program must indicate to the user the main problems of his diet. Warn the user about nutritional deficiencies, excesses and lack of diversity ✓
+* The user should receive suggestions for foods that could help to fill nutritional gaps and achieve healthier eating habits ✓
 ### Collect information for the poster
 * Test the program with a volunteer and keep this test as a case study for using the program
-* Extract the information, figures and charts necessary for the poster
-* Writing the text of the poster
+* Extract the information, figures and charts necessary for the poster ✓
+* Writing the text of the poster ✓
 ### Creation of the poster and presentation
 * Assemble the elements for the poster and print it
 * Prepare for the oral presentation
