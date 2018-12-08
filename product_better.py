@@ -74,8 +74,9 @@ def find_healthier_product(product_tuple, df, dic_tag):
         
         # Check if one of the similar product is actually better that our product
         score = df_similar.loc[ind]['Predicted_NutriScore_score']
+        grade = df_similar.loc[ind]['Predicted_NutriScore_grade']
         
-        if score < best_sc:
+        if (score < best_sc) & (grade != 'Error'):
             best_sc = score
             best_product = df_similar.loc[ind]
             best_code = ind 

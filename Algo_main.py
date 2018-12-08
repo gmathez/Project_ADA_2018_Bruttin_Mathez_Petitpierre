@@ -18,9 +18,6 @@ def  color_(grade):
 	else:
 		return '#990406'
 
-
-
-
 def algo(dict_prod, dict_set, df):
 	list_prod = [prod_quant for prod_quant in dict_prod['Product'] if prod_quant[1] != 0]
 	list_Api = [prod_quant for prod_quant in dict_prod['API'] if prod_quant[1] != 0]
@@ -55,9 +52,8 @@ def algo(dict_prod, dict_set, df):
 		color_(dict_nutri['NutriScore_Non_Beverages']), Nutri_food_text)
 
 		text_end = '''<footer><h4>Thanks for using our app ! <a href="https://nutriteam.github.io/Nutri_Score/home">
-		Please visit our website</a>\n</h4><h5> - by NutriTeam</h5></footer>'''
-
-
+		Please visit our website</a>\n</h4><br>If you see mistakes or missing products, go to <a href="https://world.openfoodfacts.org/"
+		target = "_blanck">Open Food Facts</a> to correct or add products. Improve with us the database !<br><h5> - by NutriTeam</h5></footer>'''
 
 		text = text_head + text_welcome + text_nutri + text_rec + text_healthier_prod + text_prod + text_end
 		email.Send_rec(dict_set['Email'], text)
