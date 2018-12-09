@@ -1,6 +1,6 @@
 from df_nutri_create import sum_dataframe
 
-
+# Compute recomendation for each categories
 def Energy_rec(Male, Exercice, Age):
 	if (Age >= 1) & (Age < 4):
 		if Exercice == 1.4:
@@ -332,10 +332,11 @@ def Sodium_rec(Age):
 	else:
 		return -1
 
+# Compute text according to the recomendation for each categories
 def Energy_text(Male, Exercice, Age, Energy_quantites, Days):
 	rec = Energy_rec(Male, Exercice, Age)
 	if rec != -1:
-		rec = rec * 4.1868
+		rec = rec * 4.1868 # kcal to kJ
 		if Energy_quantites > (rec * 1.1 * Days):
 			return 'With your {:.1f} kJ of energy, you are above the recommendation ({:.1f} kJ per days). You should eat less or differently.'\
 			.format(Energy_quantites, rec)
@@ -437,7 +438,7 @@ def Fruits_text(Fruits_ratio):
 	return 'Your menu is composed of {:.1f} % of fruits,vegetables and/or nuts.'.format(Fruits_ratio)
 
 def Rec_text(Male, Age, Exercice, Days, Weight, Dict_):
-
+	'''Main function to do the text for the recomendation'''
 	Energy_quantites = Dict_['Energy']
 	Lipid_quantites = Dict_['Fat']
 	Protein_quantites = Dict_['Protein']

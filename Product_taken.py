@@ -1,6 +1,7 @@
 import pandas as pd 
 
 def product_list(list_product, df, list_api):
+	'''Return text with the product selected by the user '''
 	text = '<h2 style="color:#3C627E"> Products Selected </h2>'
 
 	if len(list_product) > 0:

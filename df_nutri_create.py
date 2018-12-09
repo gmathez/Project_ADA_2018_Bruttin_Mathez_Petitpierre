@@ -3,6 +3,8 @@ import computeNutriScore as nutri_sc
 from API_US_agri import fill_from_Api
 
 def create_dataframe(list_product, data_food):
+	'''Create a dataframe that contains all the product selected by the user '''
+
 	column_for_data_food = ['product_name','categories_tags','energy_100g','fat_100g',
                         'saturated-fat_100g','sugars_100g','salt_100g','sodium_100g',
                         'fruits-vegetables-nuts_100g','fruits-vegetables-nuts-estimate_100g',
@@ -30,7 +32,7 @@ def sum_dataframe(df_product):
 
 
 def separate_dataframe(df_product):
-
+	'''Separate beverages and non-beverages product '''
 	df_beverages = df_product[df_product.categories_tags.str.contains('beverages', case=False) &\
         ~df_product.categories_tags.str.contains('en:plant-based-foods,', case=False) &\
         (~ df_product.categories_tags.str.contains('milk', case=False))].copy()
@@ -90,12 +92,19 @@ def api_fill(df_product, Api_list):
 
 
 def main_nutri(list_product, data_food, Api_list):
+	'''Compute NutriScore and take usefull value'''
 
+	# Create and fill with API
 	df_product = create_dataframe(list_product, data_food)
 	df_product = api_fill(df_product, Api_list)
+
+	# Put the fruits content on the real fruits-vegetables-nuts column
 	df_product = clean_fruit_case(df_product)
+
+	# Multiply each column by the quantites of the product 
 	df_product = multpliply_quantites(df_product)
 
+	# For recomendation, compute usefull values
 	df_product_sum = sum_dataframe(df_product)
 
 	Fiber_quantites = df_product_sum['fiber_100g'][0]
@@ -110,14 +119,18 @@ def main_nutri(list_product, data_food, Api_list):
 	else:
 		Vegies_quantites = 0
 
-
+	# Separate beverages and non-beverages and also the water
 	df_beverages, df_non_beverages = separate_dataframe(df_product)
 	df_water, df_non_water = separate_water(df_beverages)
+
+	# Put protein egal to 0 according to the exception of the official NutriScore algorithm
 	df_non_beverages = clean_protein_case(df_non_beverages)
 
+	# Sum beverages
 	df_beverages_tot = sum_dataframe(df_non_water)
 	df_water_tot = sum_dataframe(df_water)
 
+	# For recomendation
 	beverages_quantites = df_beverages_tot['quantites'][0] + df_water_tot['quantites'][0]
 
 	if beverages_quantites != 0:
@@ -125,11 +138,14 @@ def main_nutri(list_product, data_food, Api_list):
 	else:
 		Non_water_quantites = 0
 
+	# Sum non-beverages
 	df_non_beverages_tot = sum_dataframe(df_non_beverages)
 
+	# Put the dataframe in a range of 0-100 (as a normal product)
 	df_beverages_tot_norm = normalize_df(df_beverages_tot)
 	df_non_beverages_tot_norm = normalize_df(df_non_beverages_tot)
 
+	# compute NutriScore
 	if (df_beverages_tot_norm['categories_tags'][0] != 0) & (len(df_non_water) > 0):
 		final_score_Beverages = nutri_sc.computeScoreBeverages(df_beverages_tot_norm)
 		NutriScore_Beverages = nutri_sc.getNutriScoreBeverages(final_score_Beverages, df_beverages_tot_norm)

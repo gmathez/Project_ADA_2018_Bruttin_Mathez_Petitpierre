@@ -352,7 +352,7 @@ class NutriScoreApp(App):
     def build(self):
         # Import the database for the whole application
         global DF, allTrue
-        DF = pd.read_csv('../data/OpenFoodFacts_final.csv', low_memory=False, index_col = [0])
+        DF = pd.read_csv('./data/OpenFoodFacts_final.csv', low_memory=False, index_col = [0])
         allTrue = DF['product_name'].str.contains('', case=False) # True Vector of length len(DF)
         return Manager()
 

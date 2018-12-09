@@ -88,6 +88,8 @@ def find_healthier_product(product_tuple, df, dic_tag):
 def Better_product_rec(list_product, df):
     text = '<h2 style="color:#3C627E"> Healthier Product </h2>'
     dic_tag = list_df_tags(df)
+
+    # Check for each product healthier product and compute the text for the recomendation
     for product in list_product:
         replaced, ideal_product, ideal_nutriscore, ideal_code, old_score, old_gr, new_gr = find_healthier_product(product, df, dic_tag)
         if replaced:
