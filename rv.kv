@@ -1,8 +1,10 @@
 #:kivy 1.10.0
 
-<SelectableGrid>:
+# Kivy File for RecycleView
+
+<SelectableGrid>: # Display the products as a Grid of TextInput (barcode, product_name, brand)
+
     # Draw a background to indicate selection
-    #group: 'selection'
     canvas.before:
         Color:
             rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
@@ -12,8 +14,10 @@
     pos: self.pos
     size: self.size
     cols: 3
-    on_selected: root.parent.parent.parent.parent.getSelection(root.ids['id_label1'].text, root.ids['id_label2'].text, self.selected) if root.parent != None else False
-    TextInput:
+    # Get barcode and product_name of the selection and pass it to ScreenProduct function getSelection
+    # Check first if there is data
+    on_selected: root.parent.parent.parent.parent.getSelection(id_label1.text, id_label2.text, self.selected) if root.parent != None else False
+    TextInput: # barcode
         id: id_label1
         text: ''
         size_hint: .25,1
@@ -21,7 +25,7 @@
         readonly: True
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
-    TextInput:
+    TextInput: # product_name
         id: id_label2
         text:''
         size_hint: .5,1
@@ -29,7 +33,7 @@
         readonly: True
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
-    TextInput:
+    TextInput: # brand
         id: id_label3
         text:''
         size_hint: .25, 1
@@ -38,13 +42,12 @@
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
 
-<SelectableQuantity>:
+<SelectableQuantity>: # Display the products as a Grid of TextInput (barcode, product_name, quantity)
     # Draw a background to indicate selection
-    #group: 'selection'
     pos: self.pos
     size: self.size
     cols: 3
-    TextInput:
+    TextInput: # barcode
         id: id_label1
         hint_text:'0'
         size_hint: .25,1
@@ -52,7 +55,7 @@
         readonly: True
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
-    TextInput:
+    TextInput: # product_name
         id: id_label2
         hint_text:'0'
         size_hint: .5,1
@@ -60,7 +63,7 @@
         readonly: True
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
-    TextInput:
+    TextInput: # quantity
         id: id_label3
         suggestion_text:'0'
         size_hint: .25, 1
@@ -70,10 +73,12 @@
         font_size: 20
         input_filter: 'int' 
         multiline: False
+        # Get barcode, product_name and quantity of the selection and pass it to Manager function updateQuantity
+        # Check first if there is data        
         on_text: root.parent.parent.parent.parent.updateQuantity(root.index, id_label1.text, id_label2.text, self.text) if root.parent != None else False
 
 
-<RV>:           
+<RV>:  # RecycleView widget. The viewclass is determined in the different screens kivy files         
     SelectableRecycleBoxLayout:
         default_size: None, dp(56)
         default_size_hint: 1, None

@@ -1,10 +1,12 @@
 #:kivy 1.10.0
 
-<ScreenQuantities>:
+# Kivy file for the Quantities Screen
+
+<ScreenQuantities>: 
     BoxLayout:
         orientation: 'vertical'
         
-        GridLayout:
+        GridLayout: # Grid of Labels for the description of the columns
             size_hint: 1,.15
             cols:3
             rows:1
@@ -22,7 +24,7 @@
                 size_hint: .25,1
         RV:
             id: rv
-            viewclass: 'SelectableQuantity'
+            viewclass: 'SelectableQuantity'  # Select the SelectableQuantity class
         
         BoxLayout:
             orientation: 'horizontal'

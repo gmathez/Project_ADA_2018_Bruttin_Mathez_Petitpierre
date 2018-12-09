@@ -1,5 +1,7 @@
 #:kivy 1.10.0
 
+# Kivy file of the Settings Screen
+
 <ScreenSettings>:
     BoxLayout:
         orientation: 'vertical'
@@ -42,6 +44,7 @@
                 foreground_color: [1, 1, 1, 1]
                 background_color: [0, 0, 0, 0]
 
+            # Group of widgets for radio buttons
             BoxLayout:
                 orientation: 'vertical'
 
@@ -94,6 +97,7 @@
         BoxLayout:
             orientation: 'horizontal'
 
+            # Group of widgets for radio buttons
             BoxLayout:
                 orientation: 'vertical'
 
@@ -148,13 +152,8 @@
 
             Button:
                 text: 'Pass'
-                on_press: root.changeScreen(False)
+                on_press: root.changeScreen(False) # Allow to pass the completion of the form
 
             Button:
                 text: 'Validate'
-                on_press: root.changeScreen(True)        
-
-
-
-
-
+                on_press: root.changeScreen(True)

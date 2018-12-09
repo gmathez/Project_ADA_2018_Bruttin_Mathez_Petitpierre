@@ -1,8 +1,12 @@
 #:kivy 1.10.0
 
+# Kivy File for Manager Controller
+
+
 <Manager>:
     id: screen_manager
 
+    # All the screens of the application
     screen_home: screen_home
     screen_product: screen_product
     screen_quantities: screen_quantities
@@ -23,7 +27,7 @@
         id: screen_quantities
         name: 'Quantities Screen'
         manager: screen_manager
-        on_enter: root.ids.screen_quantities.initQuantity(root.selected_products)
+        on_enter: screen_quantities.initQuantity(root.selected_products) # Execute when entering the screen
     
     ScreenSettings:
         id: screen_settings
@@ -34,4 +38,4 @@
         id: screen_final
         name: 'Final Screen'
         manager: screen_manager
-        on_enter: root.computation()
+        on_enter: root.computation() # Execute when entering the screen

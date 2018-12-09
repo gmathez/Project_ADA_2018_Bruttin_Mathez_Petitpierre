@@ -1,28 +1,30 @@
 #:kivy 1.10.0
 
+# Kivy file for the Product Screen
+
 <ScreenProduct>:
     BoxLayout:
         orientation: 'vertical'
         BoxLayout:
             orientation: 'horizontal'
             size_hint: 1,.25
-            TextInput:
+            TextInput: # Input for the selection of the products to display
                 id: query
                 size_hint: 5,1
                 text: ''
                 hint_text: 'Input BarCode or Product Name'
                 font_size: 30
                 multiline: False
-                on_text_validate: root.ids.rv.upload(root.ids.query.text, root.ids.raw.active)
+                on_text_validate: rv.upload(query.text, raw.active)
             BoxLayout:
                 orientation: 'vertical'
                 Label:
                     text: 'Raw Food Item'
-                CheckBox:
+                CheckBox: # Check in order to call the API
                     id: raw
                     active: False
                 
-        GridLayout:
+        GridLayout: # Grid of Labels for the description of the columns
             size_hint: 1,.15
             cols:3
             rows:1
@@ -41,7 +43,7 @@
 
         RV:
             id: rv
-            viewclass: 'SelectableGrid'
+            viewclass: 'SelectableGrid' # Select the SelectableGrid class
         BoxLayout:
             orientation: 'horizontal'
             size_hint: 1,.25
