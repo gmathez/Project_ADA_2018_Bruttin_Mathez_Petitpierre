@@ -103,7 +103,7 @@ class RV(RecycleView):
                         'label3': {'text': str(row[-1])}} # barcode, product_name, brand
                     self.data.append(d)
             else:
-                isinside = DF['code'].str.contains(query, case=False) # Search for Barcode
+                isinside = DF.index.str.contains(query, case=False) # Search for Barcode
 
                 if any(isinside):
                     selection = DF[isinside]
