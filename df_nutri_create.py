@@ -104,7 +104,11 @@ def main_nutri(list_product, data_food, Api_list):
 	Energy_quantites = df_product_sum['energy_100g'][0]
 	Glucide_quantites = df_product_sum['sugars_100g'][0]
 	Lipid_quantites = df_product_sum['fat_100g'][0]
-	Vegies_quantites = df_product_sum['fruits-vegetables-nuts_100g'][0] * 100/ df_product_sum['quantites'][0]
+	nonbeverages_quantites = df_product_sum['quantites'][0]
+	if nonbeverages_quantites != 0:
+		Vegies_quantites = df_product_sum['fruits-vegetables-nuts_100g'][0] * 100/ df_product_sum['quantites'][0]
+	else:
+		Vegies_quantites = 0
 
 
 	df_beverages, df_non_beverages = separate_dataframe(df_product)
