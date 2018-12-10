@@ -398,7 +398,7 @@ class Manager(ScreenManager):
                 'age': [data['age']], 'sex': [data['sex']], 'email': [data['email']], 'weight': [data['weight']], \
                 'activity': [data['activity']], 'days': [data['days']]})
             new_profile_list= profile_list
-            new_profile_list.iloc[new,:] = temp_df
+            new_profile_list.iloc[new] = temp_df.iloc[0]
 
         new_profile_list.to_csv('./data/profile.csv', sep=';')
 
