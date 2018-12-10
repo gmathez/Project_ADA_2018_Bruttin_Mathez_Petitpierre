@@ -12,7 +12,7 @@
             Button:
                 text: 'Create New Profile'
                 font_size: 25
-                on_press: root.parent.toSettings('')
+                on_press: root.parent.toSettings('new')
 
             BoxLayout:
                 orientation: 'horizontal'
@@ -33,6 +33,7 @@
             Button:
                 text: 'Pass'
                 font_size: 25
+                on_press: root.parent.toSettings('pass')
 
             Button:
                 text: 'Update'

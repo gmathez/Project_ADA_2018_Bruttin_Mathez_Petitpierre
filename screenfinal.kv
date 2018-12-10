@@ -14,12 +14,14 @@
             id: beverages
             text: ''
             font_size: 30
+            markup: True
 
         Label:
             id: non_beverages
             text: ''
             font_size: 30
-
+            markup: True
+            
         BoxLayout:
             orientation: 'horizontal'
             size_hint: 1,.25
@@ -33,4 +35,4 @@
                     size_hint: .5, 1
                     text: 'Back'
                     font_size: 25
-                    on_press: root.manager.current = 'Settings Screen'
+                    on_press: root.manager.current = 'Quantities Screen'

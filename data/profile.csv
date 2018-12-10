@@ -1,6 +1,6 @@
 ;name;surname;age;sex;email;weight;activity;days
-0;John;Doe;41;True;john.doe@dummy.org;80;1.4;3
+0;Jacky;Doe;41;True;john.doe@dummy.org;80;1.4;3
 1;Robert;Wheeler;49;True;RobertJWheeler@rhyta.com;92;1.6;1
 2;Alicia;Fortune;80;False;AliciaSFortune@armyspy.com;94;1.4;12
 3;Janice;Rigby;71;False;JaniceRigby@dayrep.com;57;1.8;2
-4;asdfasdf;adfs;21;False;afvsdfv@safdf.csfd;123;1.6;12
+4;Anthony;Marchand;24;True;anthony.marchand@epfl.ch;60;1.6;1

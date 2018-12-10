@@ -191,7 +191,7 @@ class ScreenSettings(Screen):
                 self.ids.seated.active = True
                 self.ids.both.active = False
                 self.ids.standing.active = False
-        else:
+        elif int(self.id_profile) == -999:
             self.ids.name.text = ''
             self.ids.surname.text = ''
             self.ids.age.text = ''
@@ -203,6 +203,8 @@ class ScreenSettings(Screen):
             self.ids.both.active = False
             self.ids.standing.active = False
             self.ids.days.text = ''
+        else:
+            self.changeScreen(False)
 
     def changeScreen(self, valid):
         # Handle the validity of the inputs and the change of current screen
@@ -329,19 +331,22 @@ class Manager(ScreenManager):
 
     def getProfiles(self):
         self.ids.screen_profile.ids.profile_spinner.values = \
-            [str(index + 1) + ' : ' + profile_list['name'][index] + ' ' + profile_list['surname'][index] \
+            [str(index + 1) + ' : ' + str(profile_list['name'][index]) + ' ' + str(profile_list['surname'][index]) \
             for index in profile_list.index]
 
     def toSettings(self, text):
-        if text != '':
+        if text == 'new':
+            id_profile = -999
+        elif text == 'pass':
+            id_profile = -1000
+        else:
             items = text.split()
             id_profile = items[0].strip()
             id_profile = int(id_profile) - 1
-        else:
-            id_profile = -999
 
         self.ids.screen_settings.setForm(id_profile)
-        self.current = 'Settings Screen'
+        if id_profile != -1000:
+            self.current = 'Settings Screen'
         
 
     def addProduct(self):
@@ -387,12 +392,16 @@ class Manager(ScreenManager):
         self.settings['Day'] = data['days']
         self.settings['Sex'] = data['sex']
         self.settings['Age'] = data['age']
+        
+        update = True
 
         if new == -999:
             temp_df = pd.DataFrame.from_dict({'index': [len(profile_list)], 'name': [data['name']], 'surname': [data['surname']], \
                 'age': [data['age']], 'sex': [data['sex']], 'email': [data['email']], 'weight': [data['weight']], \
                 'activity': [data['activity']], 'days': [data['days']]}).set_index('index')
             new_profile_list = pd.concat([profile_list, temp_df]) 
+        elif new == -1000:
+            update = False
         else:
             temp_df = pd.DataFrame.from_dict({'name': [data['name']], 'surname': [data['surname']], \
                 'age': [data['age']], 'sex': [data['sex']], 'email': [data['email']], 'weight': [data['weight']], \
@@ -400,7 +409,8 @@ class Manager(ScreenManager):
             new_profile_list= profile_list
             new_profile_list.iloc[new] = temp_df.iloc[0]
 
-        new_profile_list.to_csv('./data/profile.csv', sep=';')
+        if update:
+            new_profile_list.to_csv('./data/profile.csv', sep=';')
 
 
     def computation(self):
