@@ -8,14 +8,26 @@
 
     # All the screens of the application
     screen_home: screen_home
+    screen_profile: screen_profile
+    screen_settings: screen_settings
     screen_product: screen_product
     screen_quantities: screen_quantities
-    screen_settings: screen_settings
     screen_final: screen_final
 
     ScreenHome:
         id: screen_home
         name: 'Home Screen'
+        manager: screen_manager
+
+    ScreenProfile:
+        id: screen_profile
+        name: 'Profile Screen'
+        manager: screen_profile
+        on_enter: root.getProfiles()
+
+    ScreenSettings:
+        id: screen_settings
+        name: 'Settings Screen'
         manager: screen_manager
 
     ScreenProduct:
@@ -29,11 +41,6 @@
         manager: screen_manager
         on_enter: screen_quantities.initQuantity(root.selected_products) # Execute when entering the screen
     
-    ScreenSettings:
-        id: screen_settings
-        name: 'Settings Screen'
-        manager: screen_manager
-
     ScreenFinal:
         id: screen_final
         name: 'Final Screen'

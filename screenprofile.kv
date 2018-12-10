@@ -1,0 +1,40 @@
+#:kivy 1.10.0
+
+# Kivy file of the Settings Screen
+
+<ScreenProfile>:
+    FloatLayout:
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: .5, .5
+            pos_hint: {'center_x': .5, 'center_y': .5}
+
+            Button:
+                text: 'Create New Profile'
+                font_size: 25
+                on_press: root.parent.toSettings('')
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Spinner:
+                    id: profile_spinner
+                    text: 'Select Profile'
+                    font_size: 25
+                    on_text: valid.disabled = False
+
+                Button:
+                    id: valid
+                    text: 'Validate'
+                    disabled: True
+                    on_press: root.parent.toSettings(profile_spinner.text)
+                    font_size: 25
+
+            Button:
+                text: 'Pass'
+                font_size: 25
+
+            Button:
+                text: 'Update'
+                font_size: 25
+            
