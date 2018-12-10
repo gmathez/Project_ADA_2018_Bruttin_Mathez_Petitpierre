@@ -72,7 +72,10 @@ def algo(dict_prod, dict_set, df):
 		# send email
 		email.Send_rec(dict_set['Email'], text)
 
-	return (Nutri_beve_text,  Nutri_food_text)
+	Nutri_beve_text_app = '[color={}]{}[/color]'.format(color_(dict_nutri['NutriScore_Beverages'])[1:], Nutri_beve_text)
+	Nutri_food_text_app = '[color={}]{}[/color]'.format(color_(dict_nutri['NutriScore_Non_Beverages'])[1:], Nutri_food_text)
+
+	return (Nutri_beve_text_app,  Nutri_food_text_app)
 
 
 
