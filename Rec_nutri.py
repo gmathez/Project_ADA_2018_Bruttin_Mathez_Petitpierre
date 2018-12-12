@@ -338,16 +338,16 @@ def Energy_text(Male, Exercice, Age, Energy_quantites, Days):
 	if rec != -1:
 		rec = rec * 4.1868 # kcal to kJ
 		if Energy_quantites > (rec * 1.1 * Days):
-			return 'With your {:.1f} kJ of energy, you are above the recommendation ({:.1f} kJ per days). You should eat less or differently.'\
-			.format(Energy_quantites, rec)
+			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}g daily), you are above the daily recommendation ({:.1f} kJ per days). You should eat less or differently.'\
+			.format(Energy_quantites, Days, Energy_quantites/Days, rec)
 		elif Energy_quantites < (rec * 0.9 * Days):
-			return 'With your {:.1f} kJ of energy, you are below the recommendation ({:.1f} kJ per days). You should eat more.'\
-			.format(Energy_quantites, rec)
-		else:
-			return 'With your {:.1f} kJ of energy, you are perfect with the recommendation ({:.1f} kJ per days). Continue like this'\
-			.format(Energy_quantites, rec)
+			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}g daily), you are below the daily recommendation ({:.1f} kJ per days). You should eat more.'\
+			.format(Energy_quantites, Days, Energy_quantites/Days, rec)
+		else:.
+			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}g daily), you perfectly comply with the daily recommendation ({:.1f} kJ per days). Keep it up !'\
+			.format(Energy_quantites, Days, Energy_quantites/Days, rec)
 	else:
-		return 'The recommendation for the energy was not computed. Did you put all the information to have a recommendation ?'
+		return 'The recommendation for energy has not been computed. Have you filled in all the information to get the recommendation ?'
 
 def Lipid_text(Age, Lipid_quantites, Energy_quantites):
 	if Energy_quantites > 0:
@@ -355,82 +355,82 @@ def Lipid_text(Age, Lipid_quantites, Energy_quantites):
 		max_, min_ = Lipid_rec(Age)
 		if (max_ != -1) or (min_ != -1):
 			if (ratio <= max_) & (ratio >= min_):
-				return 'Your fat consumption is fine ! The fats correspond to the {:.1f} % of your energy consumption (for a recommendation from {} % to {} %. Continue like this'\
+				return 'Your fat intake is fine ! Fats correspond to  {:.1f} % of your energy intake (for a recommended ratio of {} % to {} %. Keep it up !'\
 				.format(ratio, min_, max_)
 			elif ratio < min_:
-				return 'Your fat consumption ({:.1f} %) is low compared with the recommendation. It should be between {} % and {} %.'\
+				return 'Your fat intake ({:.1f} %) is low compared to the recommended ratio. It should be between {} % and {} %.'\
 				.format(ratio, min_, max_)
 			else:
-				return 'Your fat consumption ({:.1f} %) is high compared with the recommendation. It should be between {} % and {} %.'\
+				return 'Your fat intake ({:.1f} %) is high compared to the recommended ratio. It should be between {} % and {} %.'\
 				.format(ratio, min_, max_)
 		else:
-			return 'The recommendation for the fats was not computed. Did you put all the information to have a recommendation ?'
+			return 'The recommendation for fats has not been computed. Have you filled in all the information to get the recommendation ?'
 	else:
-		return 'Ups, your energy quantity is 0 kJ. Eat something !'
+		return 'Whoopsies, your energy intake is 0 kJ. You\'d better eat something !'
 
 def Prot_text(Male, Age, Protein_quantites, Weight, Days):
 	if Weight > 0:
-		ratio = Protein_quantites / Weight
+		ratio = Protein_quantites / (Weight * Days)
 		rec = Protein_rec(Male, Age)
 		if rec != -1:
-			if ratio > (rec * 1.1 * Days):
-				return 'Your protein level is too high. You eat {:.3f} g/kg for a recommendation of {:.1f} g/kg per days.'\
+			if ratio > (rec * 1.1):
+				return 'Your protein intake is too high. You eat {:.3f} g/kg for a daily recommendation of {:.1f} g/kg.'\
 				.format(ratio, rec)
-			elif ratio < (rec * 0.9 * Days):
-				return 'Your protein level is too low. You eat {:.3f} g/kg for a recommendation of {:.1f} g/kg per days.'\
+			elif ratio < (rec * 0.9):
+				return 'Your protein intake is too low. You eat {:.3f} g/kg for a daily recommendation of {:.1f} g/kg.'\
 				.format(ratio, rec)
 			else:
-				return 'Your protein level is perfect. You eat {:.3f} g/kg for a recommendation of {:.1f} g/kg per days.'\
+				return 'Your protein intake is perfect. You eat {:.3f} g/kg for a daily recommendation of {:.1f} g/kg.'\
 				.format(ratio, rec)
 
 	else:
-		return 'Ups, your weight is 0. Are you a human ?'
+		return 'Whoopsies, your weight is zero. Are you a human or a one-dimensional point ?'
 
 def Water_text(beverages_quantites, soda_ratio, Days, Age):
 	rec = Water_rec(Age)
 	if rec != -1:
 		if beverages_quantites > (rec * 1.1 * Days):
-			return ''''You drink maybe too much ! You drink {:.1f} ml but the recommendation is {:.1f} ml per days.
-			Your cosumption of non pure water (eg. sodas) is {:.1f} % of your total amount of beverages.'''.format(beverages_quantites, rec, soda_ratio)
+			return ''''You may be drinking too much ! You drink {:.1f} ml in {} days ({:.1f}ml daily), while the daily recommendation is {:.1f} ml.
+			Your cosumption of drinks other than water (eg. sodas) is {:.1f} % of your total amount of beverages.'''.format(beverages_quantites, Days, beverages_quantites/Days, rec, soda_ratio)
 		elif beverages_quantites < (rec * 0.9 * Days):
-			return '''You drink not enough ! You drink {:.1f} ml but the recommendation is {:.1f} ml per days.
-			Your cosumption of non pure water (eg. sodas) is {:.1f} % of your total amount of beverages.'''.format(beverages_quantites, rec, soda_ratio)
+			return '''You may not drink enough ! You drink {:.1f} ml in {} days ({:.1f}ml daily), while the daily recommendation is {:.1f} ml.
+			Your cosumption of drinks other than water (eg. sodas) is {:.1f} % of your total amount of beverages.'''.format(beverages_quantites, Days, beverages_quantites/Days, rec, soda_ratio)
 		else:
-			return '''You drink in the right way ! You drink {:.1f} ml for a recommendation of {:.1f} ml per days.
-			Your cosumption of non pure water (eg. sodas) is {:.1f} % of your total amount of beverages.'''.format(beverages_quantites, rec, soda_ratio)
+			return '''You drink properly ! You drink {:.1f} ml in {} days ({:.1f}ml daily), for a daily recommendation of {:.1f} ml.
+			Your consumption of drinks other than water (eg. sodas) is {:.1f} % of your total amount of beverages.'''.format(beverages_quantites, Days, beverages_quantites/Days, rec, soda_ratio)
 	else:
-		return 'Ups, your age may not defined correctly.'
+		return 'Whoopsies, our team of experts think you are either a fetus or a white walker. Not an exact science, though.'
 
 def Fiber_text(Fiber_quantites, Days):
 	rec = Fiber_rec(Fiber_quantites)
 	if rec[0] > (rec[1] * 1.1 * Days):
-		return 'You eat too much fibers. You should eat {:.1f} g but you eat {:.1f} g.'.format(rec[1], rec[0])
+		return 'You eat too much fibers. You should eat daily {:.1f} g but you eat {:.1f} g in {} days ({:.1f}g daily).'.format(rec[1], rec[0], Days, rec[0]/Days)
 	elif rec[0] < (rec[1] * 0.9 * Days):
-		return 'You eat not enough fibers. You should eat {:.1f} g but you eat {:.1f} g.'.format(rec[1], rec[0])
+		return 'You do not eat enough fibers. You should eat daily {:.1f} g but you eat {:.1f} g in {} days ({:.1f}g daily).'.format(rec[1], rec[0], Days, rec[0]/Days)
 	else:
-		return 'You eat fibers at the perfection. You should eat {:.1f} g and you eat {:.1f} g.'.format(rec[1], rec[0])
+		return 'You eat fibers to perfection. You should eat daily {:.1f} g and you eat {:.1f} g in {} days ({:.1f}g daily).'.format(rec[1], rec[0], Days, rec[0]/Days)
 
 def Sugar_text(Sugar_quantites, Days):
 	rec = Sugar_rec()
 	if Sugar_quantites > (rec[1] * 1.1 * Days):
-		return 'You eat too much sugar. You should eat less than {:.1f} g but you eat {:.1f} g.'.format(rec[1], Sugar_quantites)
+		return 'You eat too much sugar. You should eat less than {:.1f} g daily but you eat {:.1f} g in {} days ({:.1f}g daily).'.format(rec[1], Sugar_quantites, Days, Sugar_quantites/Days)
 	elif Sugar_quantites < (rec[0] * 0.9 * Days):
-		return 'You eat not enough sugar. You should more eat than {:.1f} g but you eat {:.1f} g.'.format(rec[0], Sugar_quantites)
+		return 'You do not eat enough sugar. You should more eat than {:.1f} g daily but you eat {:.1f} g in {} days ({:.1f}g daily).'.format(rec[0], Sugar_quantites, Days, Sugar_quantites/Days)
 	else:
-		return 'You eat sugar at the perfection. You should eat between {:.1f} g and {:.1f} g. You eat {:.1f} g.'.format(rec[0], rec[1], Sugar_quantites)
+		return 'You eat sugar at the perfection. You should eat between {:.1f} g daily and {:.1f} g. You eat {:.1f} g in {} days ({:.1f}g daily).'.format(rec[0], rec[1], Sugar_quantites, Days, Sugar_quantites/Days)
 
 def Sodium_text(Age, Sodium_quantites, Days):
 	rec = Sodium_rec(Age)
 	if rec != -1:
 		if Sodium_quantites > (rec * 1.1 * Days):
-			return 'You eat too salty. You eat {:.1f} mg for a recommendation of {:.1f} mg per days.'\
-			.format(Sodium_quantites * 1000, rec * 1000)
+			return 'You eat too salty. You eat {:.1f} mg of sodium in {} days ({:.1f}mg daily) for a daily recommendation of {:.1f} mg.'\
+			.format(Sodium_quantites * 1000, Days, Sodium_quantites * 1000/Days, rec * 1000)
 		elif Sodium_quantites < (rec * 0.9 * Days):
-			return 'You eat not enough sodium. You eat {:.1f} mg for a recommendation of {:.1f} mg per days.'\
-			.format(Sodium_quantites * 1000, rec * 1000)
+			return 'You do not eat enough sodium. You eat {:.1f} mg of sodium {} days ({:.1f}mg daily) for a daily recommendation of {:.1f} mg.'\
+			.format(Sodium_quantites * 1000, Days, Sodium_quantites * 1000/Days, rec * 1000)
 		else:
-			return 'Your sodium consumption is perfect. You eat {:.1f} mg for a recommendation of {:.1f} mg per days.'\
-			.format(Sodium_quantites * 1000, rec * 1000)
+			return 'Your sodium intake is perfect. You eat {:.1f} mg of sodium in {} days ({:.1f}mg daily) for a daily recommendation of {:.1f} mg.'\
+			.format(Sodium_quantites * 1000, Days, Sodium_quantites * 1000/Days, rec * 1000)
 	else:
 		return 'The recommendation for the sodium was not computed. Did you put in all the information to have a recommendation ?'
 
@@ -469,13 +469,13 @@ def Rec_text(Male, Age, Exercice, Days, Weight, Dict_):
 	text_sodium = '<h3 style="color:#008080">Sodium</h3>' + Sodium
 	text_fruits = '<h3 style="color:#008080">Fruits - Vegetables - Nuts</h3>' + Fruits
 
-	text_end = '''<h4 style="color:#3C627E">Information</h4><p>The recommendation was provided according to 
+	text_end = '''<h4 style="color:#3C627E">Information</h4><p>The recommendation was computed according to the
 	<a href="http://www.sge-ssn.ch/fr/science-et-recherche/denrees-alimentaires-et-nutriments/recommandations-nutritionnelles/valeurs-de-reference-dach/" target="_blanck"
-	>Société Suisse de Nutrition (SSN) [in French/Deutch/Italian]</a>. We do not provided to you supplementary information
-	about vitamines or additiv. For the vitamins you can check on the SSN website. About the additiv that can appear into your products,
-	we suggest to you to see <a href="https://pages.rts.ch/emissions/abe/1371092-liste-des-principaux-additifs-alimentaires.html" target="_blanck">
-	A Bon Entendeur (RTS) [in French]</a>. Also if you are pregnant or athletic, some other recommendation can be applied.
-	These recommendations are not for medical use and was compute from <a href="https://world.openfoodfacts.org/" target="_blanck">
+	>Société Suisse de Nutrition (SSN) reference values [in French/Deutch/Italian]</a>. We do not provide any additional information
+	regarding vitamins or additives. For vitamins, you can check out the SSN website. Concerning the additives that may be found in your products,
+	we suggest you to see <a href="https://pages.rts.ch/emissions/abe/1371092-liste-des-principaux-additifs-alimentaires.html" target="_blanck">
+	A Bon Entendeur (RTS) [in French]</a>. Also, if you are pregnant or an athlete, other recommendations may apply.
+	These recommendations are not for medical use and have been computed from <a href="https://world.openfoodfacts.org/" target="_blanck">
 	Open Food Facts</a> database.</p>'''
 
 	return text + text_energy + text_sugar + text_lipid + text_prot + text_fruits + text_fiber + text_sodium + text_water + text_end

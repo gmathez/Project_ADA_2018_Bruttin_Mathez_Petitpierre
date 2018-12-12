@@ -54,10 +54,10 @@ def algo(dict_prod, dict_set, df):
 		# text about all the product selected
 		text_prod = prod_tak.product_list(list_prod, df, list_Api)
 
-		text_head = '''<head><h1 style="color:#193086">Expanding Nutri-Score  : take your menu to the next level</h1>
+		text_head = '''<head><h1 style="color:#193086">Expanding Nutri-Score : take your menu to the next level</h1>
 		<h3 style="color:white">ADA 2018 - by NutriTeam</h3></head>'''
 
-		text_welcome = '''<p>Hi <b>{} {}</b>,\n Here your report : </p>'''.format(dict_set['Name'], dict_set['Surname'])
+		text_welcome = '''<p>Hi <b>{} {}</b>,\n here is your report : </p>'''.format(dict_set['Name'], dict_set['Surname'])
 
 		text_nutri = '''<h2 style="color:#3C627E">Nutri-Score</h2>
 		<p style="color:{}">{}</p>
@@ -65,8 +65,8 @@ def algo(dict_prod, dict_set, df):
 		color_(dict_nutri['NutriScore_Non_Beverages']), Nutri_food_text)
 
 		text_end = '''<footer><h4>Thanks for using our app ! <a href="https://nutriteam.github.io/Nutri_Score/home">
-		Please visit our website</a>\n</h4><br>If you see mistakes or missing products, go to <a href="https://world.openfoodfacts.org/"
-		target = "_blanck">Open Food Facts</a> to correct or add products. Improve with us the database !<br><h5> - by NutriTeam</h5></footer>'''
+		Please visit our website</a>\n</h4><br>If you find missing or erroneous products, we invite you to go to <a href="https://world.openfoodfacts.org/"
+		target = "_blanck">Open Food Facts</a> to add or edit the product pages. Improve with us the database !<br><h5> - by NutriTeam</h5></footer>'''
 
 		text = text_head + text_welcome + text_nutri + text_rec + text_healthier_prod + text_prod + text_end
 		# send email

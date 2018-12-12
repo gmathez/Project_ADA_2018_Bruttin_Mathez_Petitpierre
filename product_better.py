@@ -94,9 +94,9 @@ def Better_product_rec(list_product, df):
     for product in list_product:
         replaced, ideal_product, ideal_nutriscore, ideal_code, old_score, old_gr, new_gr = find_healthier_product(product, df, dic_tag)
         if replaced:
-            text = text + '''<p>We suggest to you to replace the product "{}" by this other product 
+            text = text + '''<p>We suggest that you replace the product "{}" with this other product 
             <a href="https://world.openfoodfacts.org/product/{}" target="_blank">{}</a> that has a better Nutri-Score.
-            Your product has a grade of {} and the one that we suggest to you has a grade of {}.</p>'''\
+            Your product has a grade of {} and the one  we suggest to you has a grade of {}.</p>'''\
             .format(df.loc[product[0]][0], ideal_code, ideal_product[0] + ' (' + ideal_product[-1] + ')',\
             old_gr, new_gr)
         else:
