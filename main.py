@@ -90,9 +90,9 @@ class RV(RecycleView):
             self.data = [{'label1': {'text': 'API'}, 'label2': {'text': query}, 'label3': {'text': 'Add/Remove'}}]
             
         else:
-            
+            isinside = allTrue
             for item in query.split(): # Split the query in keywords
-                isinside = allTrue & \
+                isinside = isinside & \
                     (DF['product_name'].str.contains(item, case=False) | \
                     DF['Brands'].str.contains(item, case=False))
 
