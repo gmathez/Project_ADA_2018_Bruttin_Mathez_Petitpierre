@@ -9,7 +9,8 @@ def relevant_tag(dic, tags, threshold = 5):
     dict_, sort = {}, []
     
     for tag in tags:
-        dict_[tag] = dic[tag]
+        if tag in dic:
+            dict_[tag] = dic[tag]
     
     # Keep only tag which have more occurencies than threshold
     dict_ = {k: v for k, v in dict_.items() if v >= threshold}
