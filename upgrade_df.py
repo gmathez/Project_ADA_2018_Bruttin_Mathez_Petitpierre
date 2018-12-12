@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import pandas as pd
 from tqdm import tqdm
 from product_better import relevant_tag, list_df_tags
@@ -79,6 +81,9 @@ def set_coherent_values(df):
 
 
 if __name__ == '__main__':
+
+	restart = False
+
 	for i in tqdm(range(1), ascii = True, desc="Download"):
 		data_raw = upload_df()
 
@@ -104,54 +109,36 @@ if __name__ == '__main__':
 	
 	dic_tag = list_df_tags(data_food)
 	
-	median_per_tag = []
-	tags_index = []
+	if restart:
+		median_per_tag = []
+		tags_index = []
 
-	threshold = 3
-	element =[(key,value) for key, value in dic_tag.items() if value >= threshold]
+		threshold = 3
+		element =[(key,value) for key, value in dic_tag.items() if value >= threshold]
 
-	for i in tqdm(range(len(element)), ascii =True, desc ="Median compute"):
+		for i in tqdm(range(len(element)), ascii =True, desc ="Median compute"):
 
-		key, value = element[i]
-		tags_index.append(key)
-		data_ = data_food[data_food.categories_tags.str.contains(key, case = False)]
-		value_food = list(data_.median().values)
-		value_fruitsvegnut = np.median(np.concatenate((data_[['fruits-vegetables-nuts_100g']].dropna(axis = 0).values,\
-			data_[['fruits-vegetables-nuts-estimate_100g']].dropna(axis = 0).values)))
-		value_food.append(value_fruitsvegnut)
-		median_per_tag.append(value_food)
+			key, value = element[i]
+			tags_index.append(key)
+			data_ = data_food[data_food.categories_tags.str.contains(key, case = False)]
+			value_food = list(data_.median().values)
+			value_fruitsvegnut = np.median(np.concatenate((data_[['fruits-vegetables-nuts_100g']].dropna(axis = 0).values,\
+				data_[['fruits-vegetables-nuts-estimate_100g']].dropna(axis = 0).values)))
+			value_food.append(value_fruitsvegnut)
+			median_per_tag.append(value_food)
 
-	column_for_tab_for_filling = ['energy_100g','fat_100g','saturated-fat_100g',
-	                                            'sugars_100g','salt_100g','sodium_100g','fruits-vegetables-nuts_100g',
-	                                            'fruits-vegetables-nuts-estimate_100g','fiber_100g','proteins_100g', 'fruits-vegetables-nuts-filling-estimate']
-	tab_for_filling = pd.DataFrame(data = median_per_tag, index = tags_index, columns = column_for_tab_for_filling)
-	tab_for_filling.to_csv('./data/tab_for_filling.csv')
+		column_for_tab_for_filling = ['energy_100g','fat_100g','saturated-fat_100g',
+		                                            'sugars_100g','salt_100g','sodium_100g','fruits-vegetables-nuts_100g',
+		                                            'fruits-vegetables-nuts-estimate_100g','fiber_100g','proteins_100g', 'fruits-vegetables-nuts-filling-estimate']
+		tab_for_filling = pd.DataFrame(data = median_per_tag, index = tags_index, columns = column_for_tab_for_filling)
+		
+		tab_for_filling.to_csv('./data/tab_for_filling.csv')
+	else:
+		tab_for_filling = pd.read_csv('./data/tab_for_filling.csv')
 
 	data_food_final = data_food.copy()
-	data_food_final['Predicted_NutriScore_grade'] = np.nan
-	data_food_final['Predicted_NutriScore_score'] = np.nan
-	data_food_final['Brands'] = ' '
 
-	for i in tqdm(range(len(data_food_final)), ascii = True, desc = "Filling / NutriScore"):
-		product = data_food_final.iloc[[i]]
-
-	    # Compute NutriScore
-		nutriscore, final_score = computeNutriScore(product)
-
-	    # Complete the dataset with the computed values
-		data_food_final.loc[product.index[0], 'Predicted_NutriScore_grade'] = nutriscore
-		data_food_final.loc[product.index[0], 'Predicted_NutriScore_score'] = final_score
-
-	    # Search for common feature for the product name with long name
-		regex_group = re.search('(.*)(?=même code)', product.product_name[0])
-
-		if regex_group != None:
-			data_food_final.loc[product.index[0], 'product_name'] = regex_group.group(0)[:-1]
-
-	    # add brands                               
-		Brands = data_clean.at[product.index[0], 'brands']
-		if str(Brands) != 'nan':
-			data_food_final.loc[product.index[0], 'Brands'] = Brands
+	for i in tqdm(range(len(data_food_final)), ascii = True, desc = "Filling"):
 	    
 		if data_food_final.iloc[i].isnull().sum() > 0:
 	            
@@ -185,6 +172,34 @@ if __name__ == '__main__':
 						break
 
 	data_food_final = set_coherent_values(data_food_final)
+
+	data_food_final['Predicted_NutriScore_grade'] = np.nan
+	data_food_final['Predicted_NutriScore_score'] = np.nan
+	data_food_final['Brands'] = ' '
+
+	for i in tqdm(range(len(data_food_final)), ascii = True, desc = "NutriScore"):
+
+		product = data_food_final.iloc[[i]]
+
+	    # Compute NutriScore
+		nutriscore, final_score = computeNutriScore(product)
+
+	    # Complete the dataset with the computed values
+		data_food_final.loc[product.index[0], 'Predicted_NutriScore_grade'] = nutriscore
+		data_food_final.loc[product.index[0], 'Predicted_NutriScore_score'] = final_score
+
+	    # Search for common feature for the product name with long name
+		regex_group = re.search('(.*)(?=même code)', product.product_name[0])
+
+		if regex_group != None:
+			data_food_final.loc[product.index[0], 'product_name'] = regex_group.group(0)[:-1]
+
+	    # add brands                               
+		Brands = data_clean.at[product.index[0], 'brands']
+		if str(Brands) != 'nan':
+			data_food_final.loc[product.index[0], 'Brands'] = Brands
+
+
 	data_food_final.to_csv('./data/OpenFoodFacts_final.csv')
             
 
