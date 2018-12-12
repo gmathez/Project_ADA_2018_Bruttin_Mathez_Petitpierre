@@ -33,7 +33,8 @@ def list_df_tags(data_food):
     # List them
     for tags in all_tags:
         for tag in tags:
-            list_tags.append(tag)
+            if tag != '':
+                list_tags.append(tag)
     
     # Return the list by number of occurences 
     return dict(Counter(list_tags).most_common())
