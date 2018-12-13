@@ -57,7 +57,7 @@ With Milestone 2, we clean and fill the database.
 Nothing at this moment
 
 ## Files description
-### Milestone_2.ipynb
+### main_notebook.ipynb
 The main notebook of our project. It contains the data presentation elements, cleaning, and all other processes included in milestone 2. It was extend also with what we done for milestone 3. 
 ### data Folder
 This folder contains tab_for_filling.csv, which contains the medians of the elements by category and nutrient as well as OpenFoodFacts_final.csv which contains the dataset completed by our preprocessing cleaning and filling. The calculation time for these last two files being long, it is indeed preferable to use the files already processed. These two csv are built automatically by running the script update_df.py. 
