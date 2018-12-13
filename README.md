@@ -17,7 +17,7 @@ The database is not complete. Every products do not have full information becaus
 
 The database are in CSV and can be easily use in our computer because of its relatively small size. 
 
-With Milestone 2, we clean and fill the database that you can download [here (using EPFL mail)](https://drive.google.com/drive/folders/1G8-zV0-ctUQSk3X2qqIoh6SKuCFYmmAd?usp=sharing). 
+With Milestone 2, we clean and fill the database. 
 
 ## List of internal milestones up until project milestone 2
 * Check which fraction of the ingredients contains complete or almost complete raw nutritional data (nutrients, fats, etc.) ✓
@@ -57,13 +57,38 @@ With Milestone 2, we clean and fill the database that you can download [here (us
 Nothing at this moment
 
 ## Files description
-### computeNutriScore.py
-This file contains the functions of the algorithm based on the indications of the French Ministry of Agriculture which allow us to calculate the nutriscore.
 ### Milestone_2.ipynb
-The main notebook of our project. It contains the data presentation elements, cleaning, and all other processes included in milestone 2. 
+The main notebook of our project. It contains the data presentation elements, cleaning, and all other processes included in milestone 2. It was extend also with what we done for milestone 3. 
 ### data Folder
-This folder must contain the open food dataset, in csv format. It can also contain tab_for_filling.csv, which contains the medians of the elements by category and nutrient as well as data_food_final.csv ([downloadable here](https://drive.google.com/drive/folders/1G8-zV0-ctUQSk3X2qqIoh6SKuCFYmmAd?usp=sharing)), which contains the dataset completed by our preprocessing and which we used to present our data in the second part of the notebook. The calculation time for these last two files being long, it is indeed preferable to use the files already processed.
+This folder contains tab_for_filling.csv, which contains the medians of the elements by category and nutrient as well as OpenFoodFacts_final.csv which contains the dataset completed by our preprocessing cleaning and filling. The calculation time for these last two files being long, it is indeed preferable to use the files already processed. These two csv are built automatically by running the script update_df.py. 
+The folder contains also profile.csv, that is used for our app to save profile user.
 ### Data_scrapping_USagriculture.ipynb
 Secondary notebook, called by the main notebook and containing the algorithm to access the US Department of Agriculture database.
+### API_US_agri.py
+It contains the script to extract informations via API from US Department of Agriculture.
+### Algo_main.py
+It contains the main script to compute NutriScore and send the recomendations via email.
+### Product_taken.py
+It contains the script wich give back the text to add for the email about what the user took.
+### Rec_nutri.py
+It contains the script to analyze the final nutritional values and compare them with the daily recommendations. It returns a text for the email.
+### computeNutriScore.py
+This file contains the functions of the algorithm based on the indications of the French Ministry of Agriculture which allow us to calculate the nutriscore.
+### df_nutri_create.py
+It create a dataframe of all the product that the user took and standardize it to finally compute the global NutriScore.
+### email_nutri.py
+It sends email via our gmail adress.
+### main.py
+It is the main script for our app. It use the .kv script that are also available in our repository. 
+### product_better.py
+It computes the healthier product and create a text for the email.
+### upgrade_df.py
+It contains all the script to download the initial OpenFoodFacts, clean and fill it. 
+## Contribution
+### Bruttin Valentin
 
+### Mathez Grégory
 
+### PetitPierre Rémi
+
+## Visit our website ! https://nutriteam.github.io/Nutri_Score/home.html
