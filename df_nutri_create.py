@@ -127,14 +127,15 @@ def main_nutri(list_product, data_food, Api_list):
 	df_non_beverages = clean_protein_case(df_non_beverages)
 
 	# Sum beverages
-	df_beverages_tot = sum_dataframe(df_non_water)
+	df_beverages_tot = sum_dataframe(df_beverages)
+	df_non_water_tot = sum_dataframe(df_non_water)
 	df_water_tot = sum_dataframe(df_water)
 
 	# For recomendation
-	beverages_quantites = df_beverages_tot['quantites'][0] + df_water_tot['quantites'][0]
+	beverages_quantites = df_beverages_tot['quantites'][0]
 
 	if beverages_quantites != 0:
-		Non_water_quantites = df_beverages_tot['quantites'][0] * 100 / beverages_quantites
+		Non_water_quantites = df_non_water_tot['quantites'][0] * 100 / beverages_quantites
 	else:
 		Non_water_quantites = 0
 
