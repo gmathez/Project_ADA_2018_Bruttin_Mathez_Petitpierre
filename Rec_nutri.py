@@ -338,13 +338,13 @@ def Energy_text(Male, Exercice, Age, Energy_quantites, Days):
 	if rec != -1:
 		rec = rec * 4.1868 # kcal to kJ
 		if Energy_quantites > (rec * 1.1 * Days):
-			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}g daily), you are above the daily recommendation ({:.1f} kJ per days). You should eat less or differently.'\
+			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}kJ daily), you are above the daily recommendation ({:.1f} kJ per days). You should eat less or differently.'\
 			.format(Energy_quantites, Days, Energy_quantites/Days, rec)
 		elif Energy_quantites < (rec * 0.9 * Days):
-			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}g daily), you are below the daily recommendation ({:.1f} kJ per days). You should eat more.'\
+			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}kJ daily), you are below the daily recommendation ({:.1f} kJ per days). You should eat more.'\
 			.format(Energy_quantites, Days, Energy_quantites/Days, rec)
 		else:
-			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}g daily), you perfectly comply with the daily recommendation ({:.1f} kJ per days). Keep it up !'\
+			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}kJ daily), you perfectly comply with the daily recommendation ({:.1f} kJ per days). Keep it up !'\
 			.format(Energy_quantites, Days, Energy_quantites/Days, rec)
 	else:
 		return 'The recommendation for energy has not been computed. Have you filled in all the information to get the recommendation ?'
