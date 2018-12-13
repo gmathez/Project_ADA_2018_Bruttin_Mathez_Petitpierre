@@ -88,6 +88,7 @@ It contains all the script to download the initial OpenFoodFacts, clean and fill
 ### Bruttin Valentin
 
 ### Mathez Grégory
+Cleaning of database, Graphs realisation, Help for filling algorithm, Email realisation, Recomendation & global NutriScore algorithm, Maintenance and creation of the DataStory, Executable creator for Windows.
 
 ### Petitpierre Rémi
 
