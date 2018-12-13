@@ -343,7 +343,7 @@ def Energy_text(Male, Exercice, Age, Energy_quantites, Days):
 		elif Energy_quantites < (rec * 0.9 * Days):
 			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}g daily), you are below the daily recommendation ({:.1f} kJ per days). You should eat more.'\
 			.format(Energy_quantites, Days, Energy_quantites/Days, rec)
-		else:.
+		else:
 			return 'With an energy intake of {:.1f} kJ in {} days ({:.1f}g daily), you perfectly comply with the daily recommendation ({:.1f} kJ per days). Keep it up !'\
 			.format(Energy_quantites, Days, Energy_quantites/Days, rec)
 	else:
