@@ -94,14 +94,15 @@ def Better_product_rec(list_product, df):
     # Check for each product healthier product and compute the text for the recomendation
     for product in list_product:
         replaced, ideal_product, ideal_nutriscore, ideal_code, old_score, old_gr, new_gr = find_healthier_product(product, df, dic_tag)
-        if replaced:
+        if replaced & (type(ideal_product[-1]) == 'str') & (type(ideal_product[0]) == 'str') :
             text = text + '''<p>We suggest that you replace the product "{}" with this other product 
             <a href="https://world.openfoodfacts.org/product/{}" target="_blank">{}</a> that has a better Nutri-Score.
             Your product has a grade of {} and the one  we suggest to you has a grade of {}.</p>'''\
-            .format(df.loc[product[0]][0], ideal_code, ideal_product[0] + ' (' + ideal_product[-1] + ')',\
-            old_gr, new_gr)
+            .format(str(df.loc[product[0]][0]), str(ideal_code), str(ideal_product[0]) + ' (' + str(ideal_product[-1]) + ')',\
+            str(old_gr), str(new_gr))
         else:
             text = text + '''<p>Your product "{}" is the best in its category.</p>'''.format(df.loc[product[0]][0])
 
     return text
+
 
