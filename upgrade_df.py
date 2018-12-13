@@ -201,6 +201,7 @@ if __name__ == '__main__':
 
 
 	data_food_final.to_csv('./data/OpenFoodFacts_final.csv')
+	data_food_final.to_csv('./data/OpenFoodFacts_final.csv.gz', compression='gzip')
             
 
 
