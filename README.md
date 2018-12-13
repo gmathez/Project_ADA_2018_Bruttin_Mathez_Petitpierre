@@ -89,6 +89,6 @@ It contains all the script to download the initial OpenFoodFacts, clean and fill
 
 ### Mathez Grégory
 
-### PetitPierre Rémi
+### Petitpierre Rémi
 
 ## Visit our website ! https://nutriteam.github.io/Nutri_Score/home.html
