@@ -1,23 +1,23 @@
 # Expanding Nutri-Score  : take your menu to the next level
 
 ## Abstract
-The nutrition is a major issue in the Western civilization. The bad eating habits are becoming one of the main causes of illness in the world, with very heavy impact on public health. Recently, the various products are being graded through nutrition benefits indices, as for example Nutri-Score. 
+The nutrition is a major issue in the Western civilization. The bad eating habits are becoming one of the main causes of illness in the world, with very heavy impact on public health. Recently, the various products are being graded through nutrition benefits indices, as for example Nutri-Score.
 Nutri-Score can give an accurate estimation on how healthy an ingredient can be. However, if it can make sense at the ingredient scale, the concept of Nutri-Score would be way more valuable if it were computed considering wider time spans instead of individual ingredients. Indeed, in its present version, Nutri-Score would always give a very high grade to white rice, for example. However, if you only eat white rice, your overall nutrition will not be optimal. The present computation of Nutri-Score is strongly limited, as it is unable to contextualize the consumption of a certain product in regard with the daily feeding practises.
 
 ## Research questions
 * Global nutritional evaluation across a short to middle period of time (days to weeks) instead of an ingredient focused approach
 * List the consumption of additives with a short description and an health evaluation
 * Warning about nutritional deficiencies, excesses and lack of diversity
-* Proposition of healthier ingredients choices to improve the eating habits, based on the previous evaluations 
+* Proposition of healthier ingredients choices to improve the eating habits, based on the previous evaluations
 
 ## Dataset
-We will use the database from Open Food Facts that is a collaborative database. Users take a picture of a food product and the list of ingredients and provide useful information. The database contains more than 680’000 product at this day. 
+We will use the database from Open Food Facts that is a collaborative database. Users take a picture of a food product and the list of ingredients and provide useful information. The database contains more than 680’000 product at this day.
 
 The database is not complete. Every products do not have full information because the user may not take a picture of the list of ingredients or the information for a particular product do not exist (not public, differents laws). The terms of use say clearly that their database may contain errors, as the data is manually entered, often partially. Therefore, the data provided can only be used for informative information and not for medical purpose.
 
-The database are in CSV and can be easily use in our computer because of its relatively small size. 
+The database are in CSV and can be easily use in our computer because of its relatively small size.
 
-With Milestone 2, we clean and fill the database. 
+With Milestone 2, we clean and fill the database.
 
 ## List of internal milestones up until project milestone 2
 * Check which fraction of the ingredients contains complete or almost complete raw nutritional data (nutrients, fats, etc.) ✓
@@ -58,9 +58,9 @@ Nothing at this moment
 
 ## Files description
 ### main_notebook.ipynb
-The main notebook of our project. It contains the data presentation elements, cleaning, and all other processes included in milestone 2. It was extend also with what we done for milestone 3. 
+The main notebook of our project. It contains the data presentation elements, cleaning, and all other processes included in milestone 2. It was extend also with what we done for milestone 3.
 ### data Folder
-This folder contains tab_for_filling.csv, which contains the medians of the elements by category and nutrient as well as OpenFoodFacts_final.csv which contains the dataset completed by our preprocessing cleaning and filling. The calculation time for these last two files being long, it is indeed preferable to use the files already processed. These two csv are built automatically by running the script update_df.py. 
+This folder contains tab_for_filling.csv, which contains the medians of the elements by category and nutrient as well as OpenFoodFacts_final.csv which contains the dataset completed by our preprocessing cleaning and filling. The calculation time for these last two files being long, it is indeed preferable to use the files already processed. These two csv are built automatically by running the script update_df.py.
 The folder contains also profile.csv, that is used for our app to save profile user.
 ### Data_scrapping_USagriculture.ipynb
 Secondary notebook, called by the main notebook and containing the algorithm to access the US Department of Agriculture database.
@@ -79,16 +79,18 @@ It create a dataframe of all the product that the user took and standardize it t
 ### email_nutri.py
 It sends email via our gmail adress.
 ### main.py
-It is the main script for our app. It use the .kv script that are also available in our repository. 
+It is the main script for our app. It use the .kv script that are also available in our repository.
 ### product_better.py
 It computes the healthier product and create a text for the email.
 ### upgrade_df.py
-It contains all the script to download the initial OpenFoodFacts, clean and fill it. 
+It contains all the script to download the initial OpenFoodFacts, clean and fill it.
 ## Contribution
+
 ### Bruttin Valentin
+Implementation of the NutriScore computation algorithm, Development of the application with Kivy, Structuring of local data storage, Help to match the algorithms with the application, Help for the recommendations
 
 ### Mathez Grégory
-Cleaning of database, Graphs realisation, Help for filling algorithm, Email realisation, Recomendation & global NutriScore algorithm, Maintenance and creation of the DataStory, Executable creator for Windows.
+Cleaning of database, Graphs realisation, Help for filling algorithm, Email realisation, Recommendation & global NutriScore algorithm, Maintenance and creation of the DataStory, Executable creator for Windows.
 
 ### Petitpierre Rémi
 
