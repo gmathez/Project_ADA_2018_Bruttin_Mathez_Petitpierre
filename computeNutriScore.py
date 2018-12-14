@@ -2,6 +2,14 @@ from numpy import isnan
 import pandas as pd
 
 def getFruits(product):
+	''' Allows to return or estimate the fruits content from categories tags '''
+	'''
+		Input:
+		product(pandas dataframe raw) : The product, which eventually owns a fruits/vegs/nuts content
+
+		Output:
+		fruits_content(int) : In percentage, the fruits/vegs/nuts content or the fruit content estimate for this product
+	'''
     if ~ product['fruits-vegetables-nuts_100g'].isnull()[0]:
         fruits_content = product['fruits-vegetables-nuts_100g'][0]
     elif ~ product['fruits-vegetables-nuts-estimate_100g'].isnull()[0]:
@@ -20,6 +28,15 @@ def getFruits(product):
     return fruits_content
 
 def computeFruitsScoreBeverages(product):
+	''' Compute the fruits/vegs/nuts score for Beverages. Subfunction of NutriScore '''
+	'''
+		Input:
+		product(pandas dataframe raw) : The product (must be a beverage) for which we want to calculate the fruits/vegs/nuts score
+
+		Output:
+		fruit_score(int) : In points, the score (contributing to the total NutriScore)
+	'''
+
     fruits_content = getFruits(product)
 
     if fruits_content < 0:
@@ -39,6 +56,15 @@ def computeFruitsScoreBeverages(product):
 
 
 def computeFruitsScore(product):
+	''' Compute the fruits/vegs/nuts score for Non-Beverages. Subfunction of NutriScore '''
+	'''
+		Input:
+		product(pandas dataframe raw) : The product (must not be a beverage) for which we want to calculate the fruits/vegs/nuts score
+
+		Output:
+		fruit_score(int) : In points, the score (contributing to the total NutriScore)
+	'''
+
     fruits_content = getFruits(product)
 
     if fruits_content < 0:
@@ -57,6 +83,15 @@ def computeFruitsScore(product):
     return fruit_score 
 
 def computeFibersScore(product):
+	''' Compute the fibers score. Subfunction of NutriScore '''
+	'''
+		Input:
+		product(pandas dataframe raw) : The product (must not be a beverage) for which we want to calculate the fibers score
+
+		Output:
+		fibers_score(int) : In points, the score (contributing to the total NutriScore)
+	'''
+
     fibers_content = product.fiber_100g[0]
     if isnan(fibers_content):
         fibers_content = -999
@@ -78,6 +113,14 @@ def computeFibersScore(product):
     return fibers_score
 
 def computeProteinsScore(product):
+	''' Compute the proteins score. Subfunction of NutriScore '''
+	'''
+		Input:
+		product(pandas dataframe raw) : The product (must not be a beverage) for which we want to calculate the proteins score
+
+		Output:
+		prot_score(int) : In points, the score (contributing to the total NutriScore)
+	'''
     prot_content = product.proteins_100g[0]
     if isnan(prot_content):
         prot_content = -999
@@ -100,6 +143,14 @@ def computeProteinsScore(product):
     return prot_score
 
 def computeEnergyScoreBeverages(product):
+	''' Compute the energy score for Beverages. Subfunction of NutriScore '''
+	'''
+		Input:
+		product(pandas dataframe raw) : The product (must be a beverage) for which we want to calculate the energy score
+
+		Output:
+		energy_score(int) : In points, the score (contributing to the total NutriScore)
+	'''
     energy_content = product.energy_100g[0]
     if isnan(energy_content):
         energy_content = -999
@@ -132,6 +183,14 @@ def computeEnergyScoreBeverages(product):
     return energy_score
 
 def computeEnergyScore(product):
+	''' Compute the energy score for non-beverages. Subfunction of NutriScore '''
+	'''
+		Input:
+		product(pandas dataframe raw) : The product (must not be a beverage) for which we want to calculate the energy score
+
+		Output:
+		energy_score(int) : In points, the score (contributing to the total NutriScore)
+	'''
     energy_content = product.energy_100g[0]
     if isnan(energy_content):
         energy_content = -999
@@ -164,6 +223,14 @@ def computeEnergyScore(product):
     return energy_score
 
 def computeFatScore(product):
+	''' Compute the fats and saturated fats score. Subfunction of NutriScore '''
+	'''
+		Input:
+		product(pandas dataframe raw) : The product for which we want to calculate the fats and sat. fats score
+
+		Output:
+		fat_score(int) : In points, the score (contributing to the total NutriScore)
+	'''
     if product.categories_tags.str.contains('en:fats', case=False)[0]:
         ags = product['saturated-fat_100g'][0]
         fat_content = product.fat_100g[0]
@@ -230,6 +297,15 @@ def computeFatScore(product):
     return fat_score      
 
 def computeSugarScoreBeverages(product):
+	''' Compute the sugar score for beverages. Subfunction of NutriScore '''
+	'''
+		Input:
+		product(pandas dataframe raw) : The product (must be a beverage) for which we want to calculate the sugar score
+
+		Output:
+		sugar_score(int) : In points, the score (contributing to the total NutriScore)
+	'''
+
     sugar_content = product.sugars_100g[0]
     if isnan(sugar_content):
         sugar_content = -999
@@ -262,6 +338,15 @@ def computeSugarScoreBeverages(product):
     return sugar_score
 
 def computeSugarScore(product):
+	''' Compute the sugar score for non-beverages. Subfunction of NutriScore '''
+	'''
+		Input:
+		product(pandas dataframe raw) : The product (must not be a beverage) for which we want to calculate the sugar score
+
+		Output:
+		sugar_score(int) : In points, the score (contributing to the total NutriScore)
+	'''
+
     sugar_content = product.sugars_100g[0]
     if isnan(sugar_content):
         sugar_content = -999
@@ -294,6 +379,15 @@ def computeSugarScore(product):
     return sugar_score
 
 def computeSodiumScore(product):
+	''' Compute the sodium score. Subfunction of NutriScore '''
+	'''
+		Input:
+		product(pandas dataframe raw): The product for which we want to calculate the sodium score
+
+		Output:
+		sodium_score(int): In points, the score (contributing to the total NutriScore)
+	'''
+
     sodium_content = product.salt_100g[0]
     if isnan(sodium_content):
         sodium_content = product.sodium_100g[0] 
@@ -331,8 +425,17 @@ def computeSodiumScore(product):
 
     return sodium_score
 
-# Compute Positive Score for non beverages product
 def computePositivePoints(product, neg):
+	''' Compute positive score for non beverages product, by summing all nutrients with a positive impact on the diet. '''
+	'''
+		Input:
+		product(pandas dataframe raw): The product (must not be a beverage) for which we want to calculate the positive score
+		neg(int): The product's total negative score
+
+		Output:
+		(int): In points, the total positive score (contributing to the total NutriScore)
+	'''
+
     fruits = computeFruitsScore(product)
     fibers = computeFibersScore(product)
     if neg < 11 or fruits == 5 or product.categories_tags.str.contains('cheese', case=False)[0]:
@@ -342,9 +445,16 @@ def computePositivePoints(product, neg):
 
     return fruits + fibers + proteins
 
-# Compute Negative Score for non beverages product
 def computeNegativePoints(product):
-    # Verif units !!!
+	''' Compute negative score for non beverages product, by summing all nutrients with a negative impact on the diet. '''
+	'''
+		Input:
+		product(pandas dataframe raw): The product (must not be a beverage) for which we want to calculate the negative score
+
+		Output:
+		(int): In points, the total negative score (contributing to the total NutriScore)
+	'''
+
     energy = computeEnergyScore(product) # kJ/100g
     fat = computeFatScore(product) # g/100g
     sugar = computeSugarScore(product) # g/100g
@@ -352,23 +462,47 @@ def computeNegativePoints(product):
 
     return energy + fat + sugar + sodium
 
-# Compute score for beverages
 def computeScoreBeverages(product):
+	''' Compute NutriScore score for beverage product by summing all positive impact nutrients and substracting and negative ones '''
+	'''
+		Input:
+		product(pandas dataframe raw): The product (must be a beverage) for which we want to calculate the NutriScore
+
+		Output:
+		(int): In points, the total NutriScore
+	'''
+
     energy = computeEnergyScoreBeverages(product)
     sugar = computeSugarScoreBeverages(product)
     fruits = computeFruitsScoreBeverages(product)
 
     return energy + sugar - fruits
 
-# Compute score for non beverages products
 def computeScore(product):
+	''' Compute NutriScore score for non-beverage product by summing all positive impact nutrients and substracting and negative ones '''
+	'''
+		Input:
+		product(pandas dataframe raw): The product (must not be a beverage) for which we want to calculate the NutriScore
+
+		Output:
+		(int): In points, the total NutriScore
+	'''
     negative_points =  computeNegativePoints(product) 
     positive_points  = computePositivePoints(product, negative_points)
     
     return negative_points - positive_points 
 
-# Compute NutriScore for Beverages
 def getNutriScoreBeverages(score, product):
+	''' Compute NutriScore grade for beverage product from the score '''
+	'''
+		Input:
+		product(pandas dataframe raw): The product (must be a beverage) for which we want to calculate the NutriScore grade
+		score(int): The NutriScore score
+
+		Output:
+		(str): From 'a' (best) to 'e' (worst), the NutriScore grade
+	'''
+
     if product.categories_tags.str.contains('en:spring-waters', case = False)[0]:
         NutriScore = 'a'
     elif score < -900:
@@ -386,8 +520,16 @@ def getNutriScoreBeverages(score, product):
     
     return NutriScore
 
-# Compute Nutriscore for non Beverage products
 def getNutriScore(score):
+	''' Compute NutriScore grade for non-beverage product from the score '''
+	'''
+		Input:
+		score(int): The NutriScore score
+
+		Output:
+		(str): From 'a' (best) to 'e' (worst), the NutriScore grade
+	'''
+
     if score < -900:
         NutriScore = 'Error'
     elif score < 0:
@@ -405,16 +547,28 @@ def getNutriScore(score):
 
     return NutriScore
 
-# Top function    
 def computeNutriScore(product):
+	''' Compute NutriScore grade and score for beverage and non-beverage product '''
+	'''
+		Input:
+		product(pandas dataframe raw): The product (must be a beverage) for which we want to calculate the NutriScore grade and score
 
+		Output:
+		tuple[0](int): The total NutriScore
+		tuple[1](str): From 'a' (best) to 'e' (worst), the NutriScore grade
+	'''
+
+	# For beverages products
     if product.categories_tags.str.contains('beverages', case=False)[0] & \
         ~product.categories_tags.str.contains('en:plant-based-foods,', case=False)[0] &\
         (~ product.categories_tags.str.contains('milk', case=False)[0]):
         final_score = computeScoreBeverages(product)
         NutriScore = getNutriScoreBeverages(final_score, product)
+
+    # For non-beverages products
     else:
         final_score = computeScore(product)            
         NutriScore = getNutriScore(final_score)
 
-    return (NutriScore, final_score)     
+    return (NutriScore, final_score)
+
