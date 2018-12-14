@@ -1,3 +1,4 @@
+# Imports
 import pandas as pd
 from urllib.request import urlopen
 import urllib.request
@@ -7,7 +8,19 @@ import numpy as np
 
 def catch_nutriment_value(nutri_dict, id_):
     ''' Catch the value of a nutriment defined by its id_ '''
+    '''
+        Input :
+        nutri_dict(dictionary): contains all nutrients information of a product
+        id_(int): contains the id of the nutrient in the database
+
+        Output :
+        value(float): value of the asked nutrient
+    '''
+
+    # Init
     value = 0
+
+    # Iterate over the nutrients to match the id with the corresponding nutrient
     for i in range(len(nutri_dict)):
         if int(nutri_dict[i]['nutrient_id']) == id_:
             value = float(nutri_dict[i]['value'])
@@ -16,37 +29,78 @@ def catch_nutriment_value(nutri_dict, id_):
 
 def catch_fruit_or_veg(raw_aliment):
     ''' Return 1 if the element is a fruit or a vegetable '''
+    '''
+        Input :
+        raw_aliment(dictionary): product from the database
+
+        Output :
+        fruit_or_veg(float): returns the fruits/vegs/nuts content
+    '''
     
-    fruit_or_veg = 0
+    # Init
+    fruit_or_veg = 0.
+
+    # If the group (i.e. type) of the product is fruits, vegetables or nuts, we put the corresponding
+    # fruits/vegs/nuts content to 1
     group = raw_aliment['group']
-    if group == 'Fruits and Fruit Juices': fruit_or_veg = 1
-    elif group == 'Vegetables and Vegetable Products' :  fruit_or_veg = 1
-    elif group == 'Legumes and Legume Products' : fruit_or_veg = 1
+    if group == 'Fruits and Fruit Juices': fruit_or_veg = 1.
+    elif group == 'Vegetables and Vegetable Products' :  fruit_or_veg = 1.
+    elif group == 'Legumes and Legume Products' : fruit_or_veg = 1.
     
     return fruit_or_veg
 
 def find_raw_aliment(search_dict):
     ''' Sometimes, the raw aliment is not the first to appear in search result, this function is there 
-    to ensure that the '''
+        to ensure that the raw aliment is preferred. '''
+    '''
+        Input :
+        search_dict(dictionary): product from the database
+
+        Output :
+        fruit_or_veg(float): returns the fruits/vegs/nuts content
+    '''
     
+    # Init
     score_list = []
     aliment_list = search_dict['list']['item']
     bonus_list = ['Fruits and Fruit Juices','Vegetables and Vegetable Products','Legumes and Legume Products']
     best_score = 0
     
+    # Attribute a score to each aliment that is more susceptible to be a raw aliment
     for i in range(len(aliment_list)):
         score = 0
-        if ('raw' in aliment_list[i]['name']) or ('unprepared' in aliment_list[i]['name']) : score += 1
+
+        # Use keywords 'raw' and 'unprepared' to detect raw aliments
+        if ('raw' in aliment_list[i]['name']) or ('unprepared' in aliment_list[i]['name']): 
+            score += 1
+
+        # Use group (i.e category) to detect raw aliments
         if (aliment_list[i]['group'] in bonus_list) : score += 1
+
+        # Store the score in a list
         score_list.append(score)
     
+    # Return the aliment which has the highest score (there can be several) and is also the upper in the list
     for i in range(len(aliment_list)):
+
         # NB the entries are also classified by relevance in the database, so that the upper entries
         # are more likely to be relevant
         if score_list[i] == max(score_list) : return aliment_list[i]
 
 def scrap(query_, ds_='Standard%20Reference', type_ = 'b'):
     ''' Scrap nutriment values from US Agriculture department database '''
+    '''
+        Input :
+        query(str): name of the product we want to query with the API (e.g 'pear')
+        ds_(str): Data source. Must be either 'Branded Food Products' or 'Standard Reference'
+        type_(str): Report type. [b]asic or [f]ull or [s]tats
+
+        Output :
+        fruit_or_veg(float): returns the fruits/vegs/nuts content
+    '''
+
+    # Init constant
+    kcal_to_kJ = 4.184
     
     # Allow to handle spaces in query without any problem to establish url
     error_ = { "errors": { "error": [{
@@ -107,12 +161,11 @@ def scrap(query_, ds_='Standard%20Reference', type_ = 'b'):
     f_food_report = urlopen(url_food_report)
     assert f_food_report.code == 200
     
-    # Loads report
+    # Load report
     food_report_dict = json.loads(f_food_report.read())
     
     nutri_dict = food_report_dict['report']['food']['nutrients']
     
-    kcal_to_kJ = 4.184
     
     # Catch nutriments using ID from the US database
     nutri_values = {
@@ -131,6 +184,15 @@ def scrap(query_, ds_='Standard%20Reference', type_ = 'b'):
 
 def fill_from_Api(product_name):
     ''' This function uses the API from US Agriculture department to scrap information about the product '''
+    '''
+        Input :
+        product_name(str): name of the product we want to query with the API (e.g 'pear')
+
+        Output :
+        product_fill[column_for_product](pandas dataframe row): Row from the dataframe containing the product
+            with all information necessary to be compatible with the rest of the programm
+    '''
+
     # The US database is ASCII-encoded, while our should at least be latin-1
     # Therefore, we handle here the most frequent exceptions
     query = product_name
@@ -163,15 +225,16 @@ def fill_from_Api(product_name):
         'Fruit_Veg_content' : 'fruits-vegetables-nuts-estimate_100g'
     }
 
+    # Only keep useful columns for the rest of the algorithm
     column_for_product = ['product_name','categories_tags','energy_100g',
                             'fat_100g','saturated-fat_100g','sugars_100g',
                             'salt_100g','sodium_100g','fruits-vegetables-nuts_100g',
                             'fruits-vegetables-nuts-estimate_100g','fiber_100g','proteins_100g']
     dic['code'] = code
     dic['categories_tags'] = tags
-    dic['Sodium'] = dic['Sodium']*0.001 # mgr => gr
+    dic['Sodium'] = dic['Sodium']*0.001 # mg => g
     dic['salt_100g'] = dic['Sodium']*2.5 # extrapolate salt from sodium
-    if dic['Fruit_Veg_content'] == 1:
+    if dic['Fruit_Veg_content'] == 1.:
         dic['Fruit_Veg_content'] = 100.0
     else:
         dic['Fruit_Veg_content'] = 0.0
@@ -182,3 +245,4 @@ def fill_from_Api(product_name):
     product_fill.rename(columns=columns, inplace=True)
     
     return product_fill[column_for_product]
+
