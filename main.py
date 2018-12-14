@@ -138,7 +138,19 @@ class ScreenHome(Screen):
 
 class ScreenProfile(Screen):
     # Class for the Profile Screen
-    pass
+    def updateDF(self):
+        global DF
+        DF = pd.read_csv('https://drive.google.com/uc?export=download&id=1aLUh1UoQcS9lBa6oVRln-DuskxK5uK3y', \
+                              index_col=[0], low_memory = False)
+
+        DF.to_csv('./data/OpenFoodFacts_final.csv.gz', compression='gzip')
+        self.ids['update'].text = 'Updated'
+        self.ids['update'].background_color = (0,1,0,1)
+
+    def update(self):
+        self.ids['update'].text = 'Updating'
+        self.ids['update'].background_color = (50/255,164/255,206/255,1)        
+
 
 class ScreenSettings(Screen):
     # Class for the Settings Screen
@@ -436,7 +448,7 @@ class NutriScoreApp(App):
         global DF, allTrue, profile_list
 
         try:
-            DF = pd.read_csv('../data/OpenFoodFacts_final.csv', low_memory=False, index_col = [0])
+            DF = pd.read_csv('./data/OpenFoodFacts_final.csv.gz', low_memory=False, index_col = [0])
             allTrue = DF['product_name'].str.contains('', case=False) # True Vector of length len(DF)
             profile_list = pd.read_csv('./data/profile.csv', sep=';', index_col=[0])
 

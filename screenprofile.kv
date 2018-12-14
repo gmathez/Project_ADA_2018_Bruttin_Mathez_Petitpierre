@@ -36,6 +36,9 @@
                 on_press: root.parent.toSettings('pass')
 
             Button:
+                id: update
                 text: 'Update'
                 font_size: 25
+                on_press: root.update()
+                on_release: root.updateDF()
             
