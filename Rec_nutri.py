@@ -12,7 +12,7 @@ def Energy_rec(Male, Exercice, Age):
 	Age(int): Age of the user
 
 	Output:
-	(int): Energy intake recommendation (in kJ)
+	(int): Energy intake recommendation (in kcal)
 	'''
 
 	if (Age >= 1) & (Age < 4):
@@ -284,10 +284,13 @@ def Lipid_rec(Age):
 	'''
 	if (Age >= 1) & (Age < 4):
 		return (30, 40)
+
 	elif (Age >= 4) & (Age < 15):
 		return (30, 35)
+
 	elif (Age >= 15) & (Age < 120):
 		return(30, 31)
+
 	else:
 		return (-1, -1)
 
@@ -300,22 +303,28 @@ def Protein_rec(Male, Age):
 	Age(int): Age of the user
 
 	Output:
-	(float): Protein intake recommendation (in gr per kg)
+	(float): Protein intake recommendation (in gr per kg (weight of the user))
 	'''
 
 	if (Age >= 1) & (Age > 4):
 		return 1.0
+
 	elif (Age >= 4) & (Age < 15):
 		return 0.9
+
 	elif (Age >= 15) & (Age < 19):
 		if Male:
 			return 0.9
+
 		else:
 			return 0.8
+
 	elif (Age >= 19) & (Age < 65):
 		return 0.8
+
 	elif (Age >= 65) & (Age < 120):
 		return 1.0
+
 	else:
 		return -1
 
@@ -332,38 +341,45 @@ def Water_rec(Age):
 
 	if (Age >= 1) & (Age < 4):
 		return 820
+
 	elif (Age >= 4) & (Age < 7):
 		return 940
+
 	elif (Age >= 7) & (Age < 10):
 		return 970
+
 	elif (Age >= 10) & (Age < 13):
 		return 1170
+
 	elif (Age >= 13) & (Age < 15):
 		return 1330
+
 	elif (Age >= 15) & (Age < 19):
 		return 1530
+
 	elif (Age >= 19) & (Age < 25):
 		return 1470
+
 	elif (Age >= 25) & (Age < 51):
 		return 1410
+
 	elif (Age >= 51) & (Age < 65):
 		return 1230
+
 	elif (Age >= 65) & (Age < 120):
 		return 1310
+
 	else:
 		return -1
 
 
-def Fiber_rec(Fiber_quantites):
+def Fiber_rec():
 	''' Returns fiber intake recommendation
 
-	Input:
-	Fiber_quantites(int): Age of the user
-
 	Output:
-	(int, int): Fiber intake recommendation (in gr)
+	int: Fiber intake recommendation (in gr)
 	'''
-	return (Fiber_quantites, 30)
+	return 30
 
 
 def Sugar_rec():
@@ -387,16 +403,22 @@ def Sodium_rec(Age):
 
 	if (Age >= 1) & (Age < 4):
 		return 400 * 0.001
+
 	elif (Age >= 4) & (Age < 7):
 		return 500 * 0.001
+
 	elif (Age >= 7) & (Age < 10):
 		return 750 * 0.001
+
 	elif (Age >= 10) & (Age < 13):
 		return 1100 * 0.001
+
 	elif (Age >= 13) & (Age < 15):
 		return 1400 * 0.001
+
 	elif (Age >= 15) & (Age < 120):
 		return 1500 * 0.001
+
 	else:
 		return -1
 
@@ -457,8 +479,8 @@ def Energy_text(Male, Exercice, Age, Energy_quantites, Days):
 
 	# Error handling
 	else:
-		return 'The recommendation for energy has not been computed. Have you filled in all the information to get \
-		the recommendation ?'
+		return '''The recommendation for energy has not been computed. Have you filled in all the information to get 
+		the recommendation ?'''
 
 
 def Lipid_text(Age, Lipid_quantites, Energy_quantites):
@@ -504,7 +526,7 @@ def Lipid_text(Age, Lipid_quantites, Energy_quantites):
 
 	# Error handling
 	else:
-		return 'Whoopsies, your energy intake is 0 kJ. You\'d better eat something !'
+		return '''Whoopsies, your energy intake is 0 kJ. You'd better eat something !'''
 
 
 def Prot_text(Male, Age, Protein_quantites, Weight, Days):
@@ -535,18 +557,22 @@ def Prot_text(Male, Age, Protein_quantites, Weight, Days):
 				return '''Your protein intake is slightly higher than the recommendation. You eat {:.3f} g/kg 
 				for a daily recommendation of {:.1f} g/kg.'''\
 				.format(ratio, rec)
+
 			elif ratio > (rec * 1.3):
 				return '''Your protein intake is clearly higher than the recommendation. You eat {:.3f} g/kg for 
 				a daily recommendation of {:.1f} g/kg.'''\
 				.format(ratio, rec)
+
 			elif (ratio < (rec * 0.9)) & (ratio >= (rec * 0.7)):
 				return '''Your protein intake is slightly too low. You eat {:.3f} g/kg for
 				 a daily recommendation of {:.1f} g/kg.'''\
 				.format(ratio, rec)
+
 			elif (ratio < (rec * 0.7)):
 				return '''Your protein intake is clearly too low. You eat {:.3f} g/kg for 
 				a daily recommendation of {:.1f} g/kg.'''\
 				.format(ratio, rec)
+
 			else:
 				return 'Your protein intake is perfect. You eat {:.3f} g/kg for a daily recommendation of {:.1f} g/kg.'\
 				.format(ratio, rec)
@@ -612,28 +638,27 @@ def Fiber_text(Fiber_quantites, Days):
 	'''
 
 	# Get fibers recommended intake
-	rec = Fiber_rec(Fiber_quantites)
+	rec = Fiber_rec()
 
 	# Return the appropriate feedback text
-	if (rec[0] > (rec[1] * 1.1 * Days)) & (rec[0] <= (rec[1] * 1.3 * Days)):
+	if (Fiber_quantites > (rec * 1.1 * Days)) & (Fiber_quantites <= (rec * 1.3 * Days)):
 		return '''You eat slightly more fibers than the actual minimal recommendation. 
 		Your daily consumption is {:.1f} g and the recommendation is {:.1f} g per day.'''\
-		.format(rec[0]/Days, rec[1])
+		.format(Fiber_quantites/Days, rec)
 
-	elif (rec[0] > (rec[1] * 1.3 * Days)):
+	elif (Fiber_quantites > (rec * 1.3 * Days)):
 		return '''You eat clearly more fibers than the actual minimal recommendation.  
 		Your daily consumption is {:.1f} g and the recommendation is {:.1f} g per day.'''\
-		.format(rec[0]/Days, rec[1])
+		.format(Fiber_quantites/Days, rec)
 
-	elif rec[0] < (rec[1] * 0.9 * Days):
-		return '''You do not eat enough fibers. They are essential for intestinal transit. Your 
+	elif Fiber_quantites < (rec * 0.9 * Days):
+		return '''You do not eat enough fibers. Your 
 		daily consumption shoud be {:.1f} g but you eat only {:.1f} g in {} days ({:.1f} g 
-		daily).'''.format(rec[1], rec[0], Days, rec[0]/Days)
+		daily).'''.format(rec, Fiber_quantites, Days, Fiber_quantites/Days)
 
-	# Error handling
 	else:
 		return '''You eat fibers to perfection. You should eat daily {:.1f} g and you eat {:.1f} g 
-		in {} days ({:.1f} g daily).'''.format(rec[1], rec[0], Days, rec[0]/Days)
+		in {} days ({:.1f} g daily).'''.format(rec, Fiber_quantites, Days, Fiber_quantites/Days)
 
 
 def Sugar_text(Sugar_quantites, Days):

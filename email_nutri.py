@@ -20,13 +20,13 @@ def Send(TO, MSG):
 
 	# NB : the code won't work in the present version, because we didn't 
 	# want to compromise the security by uploading the password on github
-	server.login('NutriTeamADA@gmail.com', 'MOTDEPASSE')
+	server.login('NutriTeamADA@gmail.com', 'password')
 	server.sendmail('NutriTeamADA@gmail.com', TO, MSG)
 	server.quit()
 
 
 def Send_rec(TO, text):
-	''' '''
+	''' Create the form of the email which will be send'''
 	'''
 		Inputs:
 		TO(str): email address of the recipient (user)
