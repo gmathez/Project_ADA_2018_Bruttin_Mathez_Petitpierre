@@ -70,7 +70,7 @@ def algo(dict_prod, dict_set, df):
 		text_rec = reco.Rec_text(dict_set['Sex'], dict_set['Age'], dict_set['Pal'], dict_set['Day'], dict_set['Weight'], dict_nutri)
 		
 		# Text for recommendation  of healthier products
-		text_healthier_prod = prod_bet.Better_product_rec(dict_prod['Product'], df)
+		text_healthier_prod = prod_bet.Better_product_rec(list_prod, df)
 		
 		# Text recap about selected product 
 		text_prod = prod_tak.product_list(list_prod, df, list_Api)
