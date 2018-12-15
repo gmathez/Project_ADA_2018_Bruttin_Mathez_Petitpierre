@@ -20,7 +20,7 @@ def Send(TO, MSG):
 
 	# NB : the code won't work in the present version, because we didn't 
 	# want to compromise the security by uploading the password on github
-	server.login('NutriTeamADA@gmail.com', 'password')
+	server.login('NutriTeamADA@gmail.com', 'BruMatPet2018#')
 	server.sendmail('NutriTeamADA@gmail.com', TO, MSG)
 	server.quit()
 
