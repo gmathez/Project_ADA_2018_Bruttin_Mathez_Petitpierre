@@ -81,8 +81,23 @@ class SelectableQuantity(RecycleDataViewBehavior, GridLayout):
         self.ids['id_label1'].text = data['label1']['text']
         self.ids['id_label2'].text = data['label2']['text']
         self.ids['id_label3'].text = data['label3']['text']
+        # self.ids['add'].background_color = data['add']['color']
         return super(SelectableQuantity, self).refresh_view_attrs(
             rv, index, data)
+
+    # def setQuantity(self, rv, index, data):
+
+    #     if self.parent != None:
+    #         self.parent.parent.parent.parent.updateQuantity(root.index, id_label1.text, id_label2.text, id_label3.text, self.background_color)
+    #     else:
+    #         return
+        
+    #     self.ids['add'].background_color = (0,1,0,1)
+    #     data['add']['color'] = (0,1,0,1)
+    #     return super(SelectableQuantity, self).refresh_view_attrs(
+    #         rv, index, data)
+
+    
 
 class RV(RecycleView):
     ''' Class for the RecycleView Controller '''
@@ -139,10 +154,11 @@ class RV(RecycleView):
         code = dict['code']
         product_name = dict['product_name']
         quantity = dict['quantity']
+        # color = dict['color']
 
         for index in range(len(code)):
             d = {'label1': {'text': code[index]}, 'label2': {'text': product_name[index]}, \
-                'label3': {'text': quantity[index]}}
+                'label3': {'text': quantity[index]}} #, 'add': {'color': color[index]}}
             self.data.append(d)
 
 class ScreenHome(Screen):
@@ -323,7 +339,7 @@ class ScreenProduct(Screen):
 class ScreenQuantities(Screen):
     ''' Class for the Quantities Screen '''
 
-    temp_dict = {'code': [], 'product_name': [], 'quantity': []}
+    temp_dict = {'code': [], 'product_name': [], 'quantity': [], 'color': []}
 
     def initQuantity(self, data):
         ''' Initialize the dictionary of the products '''
@@ -333,7 +349,7 @@ class ScreenQuantities(Screen):
 
         self.ids.rv.getQuantities(data)
 
-    def updateQuantity(self, index, text1, text2, text3):
+    def updateQuantity(self, index, text1, text2, text3): #, color):
         ''' Store the quantities input by the user '''
 
         l = len(self.temp_dict['quantity'])
@@ -345,6 +361,7 @@ class ScreenQuantities(Screen):
             self.temp_dict['code'][index] = text1
             self.temp_dict['product_name'][index] = text2
             self.temp_dict['quantity'][index] = text3
+            # self.temp_dict['color'][index] = color
         
         # Append the list of quantities if needed
         else:
@@ -352,6 +369,10 @@ class ScreenQuantities(Screen):
             self.temp_dict['code'] = self.temp_dict['code'] + temp + [text1]
             self.temp_dict['product_name'] = self.temp_dict['product_name'] + temp + [text2]
             self.temp_dict['quantity'] = self.temp_dict['quantity'] + temp + [text3]
+            # self.temp_dict['color'] = self.temp_dict['color'] + temp + [color]
+
+        # Update the data displayed
+        self.initQuantity(self.temp_dict)
 
 class ScreenFinal(Screen):
     ''' Class for the Final Screen. No variables or functions needed for this screen '''
@@ -359,7 +380,7 @@ class ScreenFinal(Screen):
 
 class Manager(ScreenManager):
     ''' Class for the Manager Controller. Store main data '''
-    selected_products = {'code': [], 'product_name': [], 'quantity': []}
+    selected_products = {'code': [], 'product_name': [], 'quantity': []} #, 'color': []}
     settings = {'Rec': True, 'Name': '', 'Surname': '', 'Email': '', 'Age': 0, 'Sex': True, 'Pal': 0, \
             'Weight': 0, 'Day': 0}
 
@@ -392,6 +413,7 @@ class Manager(ScreenManager):
             self.selected_products['code'].append(item1)
             self.selected_products['product_name'].append(item2)
             self.selected_products['quantity'].append('0')
+            # self.selected_products['color'].append((1,1,1,1))
 
     def deleteProduct(self):
         ''' Remove product of main storage '''
@@ -402,11 +424,13 @@ class Manager(ScreenManager):
             self.selected_products['code'].remove(item1)
             self.selected_products['product_name'].remove(item2)
             self.selected_products['quantity'].pop()
+            # self.selected_products['color'].pop()
 
     def getQuantities(self, data):
         ''' Add quantities to main storage '''
 
         self.selected_products['quantity'] = data['quantity']
+        # self.selected_products['color'] = data['color']
         l = len(self.selected_products['quantity'])
 
         for item in range(l):

@@ -46,11 +46,11 @@
     # Draw a background to indicate selection
     pos: self.pos
     size: self.size
-    cols: 3
+    cols: 4
     TextInput: # barcode
         id: id_label1
         hint_text:'0'
-        size_hint: .25,1
+        size_hint: .15,1
         disabled: True
         readonly: True
         background_color: [0, 0, 0, 0.5]
@@ -63,6 +63,7 @@
         readonly: True
         background_color: [0, 0, 0, 0.5]
         disabled_foreground_color: [1, 1, 1, 1]
+
     TextInput: # quantity
         id: id_label3
         suggestion_text:'0'
@@ -73,11 +74,16 @@
         font_size: 20
         input_filter: 'int' 
         multiline: False
+               
+    Button:
+        id: add
+        size_hint: .1, 1
+        text: 'add'
         # Get barcode, product_name and quantity of the selection and pass it to Manager function updateQuantity
-        # Check first if there is data        
-        on_text: root.parent.parent.parent.parent.updateQuantity(root.index, id_label1.text, id_label2.text, self.text) if root.parent != None else False
+        # Check first if there is data 
+        on_press: root.parent.parent.parent.parent.updateQuantity(root.index, id_label1.text, id_label2.text, id_label3.text) if root.parent != None else False
 
-
+#root.parent.parent.parent.parent.updateQuantity(root.index, id_label1.text, id_label2.text, id_label3.text, self.background_color) if root.parent != None else False
 <RV>:  # RecycleView widget. The viewclass is determined in the different screens kivy files         
     SelectableRecycleBoxLayout:
         default_size: None, dp(56)
