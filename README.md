@@ -90,7 +90,7 @@ It contains all the script to download the initial OpenFoodFacts, clean and fill
 Implementation of the NutriScore computation algorithm, Development of the application with Kivy, Structuring of local data storage, App Chapter on the DataStory, Help for cleaning, filling, Recommendation email and algo/app matching
 
 ### Mathez Grégory
-Cleaning of database, Graphs realisation, Help for filling algorithm and for the application, Email realisation, Recommendation & global NutriScore algorithm, Maintenance and creation of the DataStory, Executable creator for Windows
+Cleaning of database, Graphs realisation, Email realisation, Recommendation according to Société Suisse de Nutrition (SSN) & global NutriScore algorithm, Creation/Text/Maintenance of the DataStory, Executable creator for Windows with its Licence, Help for filling algorithm and for the application
 
 ### Petitpierre Rémi
 Database filling algorithm, US Agriculture API query algorithm, Products recommendation algorithm, Help with DataStory texts, Help with feedback algorithm, Code & functions comments, Poster & text for the presentation
