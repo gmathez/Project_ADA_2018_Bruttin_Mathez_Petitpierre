@@ -16,14 +16,14 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 
 # Import the kv files
-Builder.load_file('rv.kv')
-Builder.load_file('screenhome.kv')
-Builder.load_file('screenprofile.kv')
-Builder.load_file('screensettings.kv')
-Builder.load_file('screenproduct.kv')
-Builder.load_file('screenquantities.kv')
-Builder.load_file('screenfinal.kv')
-Builder.load_file('manager.kv')
+Builder.load_file('./src/rv.kv')
+Builder.load_file('./src/screenhome.kv')
+Builder.load_file('./src/screenprofile.kv')
+Builder.load_file('./src/screensettings.kv')
+Builder.load_file('./src/screenproduct.kv')
+Builder.load_file('./src/screenquantities.kv')
+Builder.load_file('./src/screenfinal.kv')
+Builder.load_file('./src/manager.kv')
 
 # Other imports
 import pandas as pd
