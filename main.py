@@ -1,3 +1,4 @@
+# Import kivy tools
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -15,32 +16,35 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 
 # Import the kv files
-Builder.load_file('./src/rv.kv')
-Builder.load_file('./src/screenhome.kv')
-Builder.load_file('./src/screenprofile.kv')
-Builder.load_file('./src/screensettings.kv')
-Builder.load_file('./src/screenproduct.kv')
-Builder.load_file('./src/screenquantities.kv')
-Builder.load_file('./src/screenfinal.kv')
-Builder.load_file('./src/manager.kv')
+Builder.load_file('rv.kv')
+Builder.load_file('screenhome.kv')
+Builder.load_file('screenprofile.kv')
+Builder.load_file('screensettings.kv')
+Builder.load_file('screenproduct.kv')
+Builder.load_file('screenquantities.kv')
+Builder.load_file('screenfinal.kv')
+Builder.load_file('manager.kv')
 
+# Other imports
 import pandas as pd
 import re
 from Algo_main import algo # Import the algorithm for NutriScore computation
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
                                  RecycleBoxLayout):
-    # Add selection and focus behaviour to the view
+    ''' Add selection and focus behaviour to the view '''
     pass
 
 class SelectableGrid(RecycleDataViewBehavior, GridLayout):
-    # Add selection support to the Label
+    ''' Add selection support to the Label '''
+
     index = None
     selected = BooleanProperty(False)
     selectable = BooleanProperty(True)
 
     def refresh_view_attrs(self, rv, index, data):
-        # Catch and handle the view changes '''
+        ''' Catch and handle the view changes '''
+
         self.index = index
         self.ids['id_label1'].text = data['label1']['text']
         self.ids['id_label2'].text = data['label2']['text']
@@ -49,7 +53,8 @@ class SelectableGrid(RecycleDataViewBehavior, GridLayout):
             rv, index, data)
 
     def on_touch_down(self, touch):
-        # Add selection on touch down
+        ''' Add selection on touch down '''
+
         if super(SelectableGrid, self).on_touch_down(touch):
             return True
 
@@ -57,18 +62,21 @@ class SelectableGrid(RecycleDataViewBehavior, GridLayout):
             return self.parent.select_with_touch(self.index, touch)
 
     def apply_selection(self, rv, index, is_selected):
-        # Respond to the selection of items
+        ''' Respond to the selection of items '''
+
         self.selected = is_selected       
         
 
 class SelectableQuantity(RecycleDataViewBehavior, GridLayout):
-    # Add selection support to the Label
+    ''' Add selection support to the Label '''
+
     index = None
     selected = BooleanProperty(False)
     selectable = BooleanProperty(True)
 
     def refresh_view_attrs(self, rv, index, data):
-        # Catch and handle the view changes 
+        ''' Catch and handle the view changes '''
+
         self.index = index
         self.ids['id_label1'].text = data['label1']['text']
         self.ids['id_label2'].text = data['label2']['text']
@@ -77,15 +85,19 @@ class SelectableQuantity(RecycleDataViewBehavior, GridLayout):
             rv, index, data)
 
 class RV(RecycleView):
-    # Class for the RecycleView Controller
+    ''' Class for the RecycleView Controller '''
+
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
 
     def upload(self, query, active):
-        # Search data according to the user input
-        self.data = [] # Reset data
+        ''' Search data according to the user input '''
 
-        if active: # Check if the Raw Food CheckBox is active or not
+        # Reset data
+        self.data = []
+
+        # Check if the Raw Food CheckBox is active or not
+        if active:
             self.parent.parent.getSelection('API', query, True)
             self.data = [{'label1': {'text': 'API'}, 'label2': {'text': query}, 'label3': {'text': 'Add/Remove'}}]
             
@@ -117,11 +129,12 @@ class RV(RecycleView):
                         self.data.append(d)  
 
                 else:
+                    # In case no product is found
                     self.data = [{'label1': {'text': ''}, \
-                        'label2': {'text': 'No product found'}, 'label3': {'text': ''}}] # In case no product is found
-    
+                        'label2': {'text': 'No product found'}, 'label3': {'text': ''}}]
     def getQuantities(self, dict):
-        # Gather data for display on Quantities Screen
+        ''' Gather data for display on Quantities Screen '''
+
         self.data = []
         code = dict['code']
         product_name = dict['product_name']
@@ -133,11 +146,12 @@ class RV(RecycleView):
             self.data.append(d)
 
 class ScreenHome(Screen):
-    # Class for the Home Screen. No variables or functions needed for this screen
+    ''' Class for the Home Screen. No variables or functions needed for this screen '''
     pass
 
 class ScreenProfile(Screen):
-    # Class for the Profile Screen
+    ''' Class for the Profile Screen '''
+
     def updateDF(self):
         global DF
         DF = pd.read_csv('https://drive.google.com/uc?export=download&id=1aLUh1UoQcS9lBa6oVRln-DuskxK5uK3y', \
@@ -153,13 +167,15 @@ class ScreenProfile(Screen):
 
 
 class ScreenSettings(Screen):
-    # Class for the Settings Screen
+    ''' Class for the Settings Screen '''
+
     settings = {'rec': True,'name': '', 'surname': '', 'age': 0, 'sex': True, 'weight': 0, \
             'email': '', 'activity': 0, 'days': 0}
     id_profile = -999
 
     def resetForm(self):
-        # Reset the indicators of invalid input
+        ''' Reset the indicators of invalid input '''
+
         self.ids.sex.color = (1,1,1,1)
         self.ids.activity.color = (1,1,1,1)
         self.ids.age.hint_text_color = (0.5, 0.5, 0.5, 1.0)
@@ -219,7 +235,8 @@ class ScreenSettings(Screen):
             self.changeScreen(False)
 
     def changeScreen(self, valid):
-        # Handle the validity of the inputs and the change of current screen
+        ''' Handle the validity of the inputs and the change of current screen '''
+
         if valid:
             self.resetForm()
             # Check name validity
@@ -289,7 +306,8 @@ class ScreenSettings(Screen):
         self.manager.current = 'Product Screen'
 
 class ScreenProduct(Screen):
-    # Class for the Product Screen
+    ''' Class for the Product Screen '''
+
     temp_dict = {'code':'', 'product_name': ''}
 
     def getSelection(self, text1, text2, state):
@@ -303,18 +321,21 @@ class ScreenProduct(Screen):
             self.temp_dict['product_name'] = ''
 
 class ScreenQuantities(Screen):
-    # Class for the Quantities Screen
+    ''' Class for the Quantities Screen '''
+
     temp_dict = {'code': [], 'product_name': [], 'quantity': []}
 
     def initQuantity(self, data):
-        # Initialize the dictionary of the products
+        ''' Initialize the dictionary of the products '''
+
         if self.temp_dict['quantity'] == []:
             self.temp_dict = data
 
         self.ids.rv.getQuantities(data)
 
     def updateQuantity(self, index, text1, text2, text3):
-        # Store the quantities input by the user
+        ''' Store the quantities input by the user '''
+
         l = len(self.temp_dict['quantity'])
 
         if text3 == '' or text3 == '-' or int(text3) < 0:
@@ -324,19 +345,20 @@ class ScreenQuantities(Screen):
             self.temp_dict['code'][index] = text1
             self.temp_dict['product_name'][index] = text2
             self.temp_dict['quantity'][index] = text3
-
+        
+        # Append the list of quantities if needed
         else:
-            temp = ['0' for i in range(index-l)] # Append the list of quantities if needed
+            temp = ['0' for i in range(index-l)] 
             self.temp_dict['code'] = self.temp_dict['code'] + temp + [text1]
             self.temp_dict['product_name'] = self.temp_dict['product_name'] + temp + [text2]
             self.temp_dict['quantity'] = self.temp_dict['quantity'] + temp + [text3]
 
 class ScreenFinal(Screen):
-    # Class for the Final Screen. No variables or functions needed for this screen
+    ''' Class for the Final Screen. No variables or functions needed for this screen '''
     pass
 
 class Manager(ScreenManager):
-    # Class for the Manager Controller. Store main data
+    ''' Class for the Manager Controller. Store main data '''
     selected_products = {'code': [], 'product_name': [], 'quantity': []}
     settings = {'Rec': True, 'Name': '', 'Surname': '', 'Email': '', 'Age': 0, 'Sex': True, 'Pal': 0, \
             'Weight': 0, 'Day': 0}
@@ -362,7 +384,7 @@ class Manager(ScreenManager):
         
 
     def addProduct(self):
-        # Add product to main storage
+        ''' Add product to main storage '''
         item1 = self.ids.screen_product.temp_dict['code']
         item2 = self.ids.screen_product.temp_dict['product_name']
 
@@ -372,7 +394,7 @@ class Manager(ScreenManager):
             self.selected_products['quantity'].append('0')
 
     def deleteProduct(self):
-        # Remove product of main storage
+        ''' Remove product of main storage '''
         item1 = self.ids.screen_product.temp_dict['code']
         item2 = self.ids.screen_product.temp_dict['product_name']
 
@@ -382,7 +404,8 @@ class Manager(ScreenManager):
             self.selected_products['quantity'].pop()
 
     def getQuantities(self, data):
-        # Add quantities to main storage
+        ''' Add quantities to main storage '''
+
         self.selected_products['quantity'] = data['quantity']
         l = len(self.selected_products['quantity'])
 
@@ -394,7 +417,8 @@ class Manager(ScreenManager):
         self.current = 'Final Screen'
 
     def setSettings(self, data, new):
-        # Add settings to main storage
+        ''' Add settings to main storage '''
+
         self.settings['Rec'] = data['rec']
         self.settings['Name'] = data['name']
         self.settings['Surname'] = data['surname']
@@ -408,8 +432,10 @@ class Manager(ScreenManager):
         update = True
 
         if new == -999:
-            temp_df = pd.DataFrame.from_dict({'index': [len(profile_list)], 'name': [data['name']], 'surname': [data['surname']], \
-                'age': [data['age']], 'sex': [data['sex']], 'email': [data['email']], 'weight': [data['weight']], \
+            temp_df = pd.DataFrame.from_dict({'index': [len(profile_list)], \
+                'name': [data['name']], 'surname': [data['surname']], \
+                'age': [data['age']], 'sex': [data['sex']], 'email': [data['email']], \
+                'weight': [data['weight']], \
                 'activity': [data['activity']], 'days': [data['days']]}).set_index('index')
             new_profile_list = pd.concat([profile_list, temp_df]) 
         elif new == -1000:
@@ -426,25 +452,30 @@ class Manager(ScreenManager):
 
 
     def computation(self):
-        # Call algo for computation of NutriScore and recommendation. Display results.
+        ''' Call algo for computation of NutriScore and recommendation. Display results '''
         dict_product = {'Product': [], 'API': []}
 
         for index in range(len(self.selected_products['code'])):
-            # Seperation of API and OpenFoodFacts data
+           
+            # Separation of API and OpenFoodFacts data
             if str(self.selected_products['code'][index]) == 'API':
-                dict_product['API'].append((str(self.selected_products['product_name'][index]), int(self.selected_products['quantity'][index])))
+                dict_product['API'].append((str(self.selected_products[
+                    'product_name'][index]), int(self.selected_products['quantity'][index])))
            
             else:
-                dict_product['Product'].append((str(self.selected_products['code'][index]), int(self.selected_products['quantity'][index])))
+                dict_product['Product'].append((str(self.selected_products[
+                    'code'][index]), int(self.selected_products['quantity'][index])))
 
-        score_beverages, score_nonbeverages =  algo(dict_product, self.settings, DF)
-        self.ids.screen_final.ids.beverages.text = score_beverages
-        self.ids.screen_final.ids.non_beverages.text = score_nonbeverages
+        # Run the algorithm to get the recommendation to print on-screen
+        text_app_beverages, text_app_nonbeverages =  algo(dict_product, self.settings, DF)
+        self.ids.screen_final.ids.beverages.text = text_app_beverages
+        self.ids.screen_final.ids.non_beverages.text = text_app_nonbeverages
 
 class NutriScoreApp(App):
-    # Main class of the App
+    ''' Main class of the App '''
+
     def build(self):
-        # Import the database for the whole application
+        ''' Import the database for the whole application '''
         global DF, allTrue, profile_list
 
         try:
@@ -459,3 +490,4 @@ class NutriScoreApp(App):
 
 if __name__ == '__main__':
     NutriScoreApp().run()
+
