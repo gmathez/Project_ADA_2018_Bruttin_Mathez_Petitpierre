@@ -87,11 +87,12 @@ It contains all the script to download the initial OpenFoodFacts, clean and fill
 ## Contribution
 
 ### Bruttin Valentin
-Implementation of the NutriScore computation algorithm, Development of the application with Kivy, Structuring of local data storage, App Chapter on the DataStory, Help for cleaning, filling, recommendation email and algo/app matching
+Implementation of the NutriScore computation algorithm, Development of the application with Kivy, Structuring of local data storage, App Chapter on the DataStory, Help for cleaning, filling, Recommendation email and algo/app matching
 
 ### Mathez Grégory
-Cleaning of database, Graphs realisation, Help for filling algorithm and for the application, Email realisation, Recommendation & global NutriScore algorithm, Maintenance and creation of the DataStory, Executable creator for Windows.
+Cleaning of database, Graphs realisation, Help for filling algorithm and for the application, Email realisation, Recommendation & global NutriScore algorithm, Maintenance and creation of the DataStory, Executable creator for Windows
 
 ### Petitpierre Rémi
+Database filling algorithm, US Agriculture API query algorithm, Products recommendation algorithm, Help with DataStory texts, Help with feedback algorithm, Code & functions comments, Poster & text for the presentation
 
 ## Visit our website ! https://nutriteam.github.io/Nutri_Score/home.html
