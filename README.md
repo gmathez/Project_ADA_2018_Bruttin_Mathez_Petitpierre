@@ -35,17 +35,17 @@ With Milestone 2, we clean and fill the database.
 ### Algorithm
 * Adapt the algorithm to take the quantities into account and to weight them in order to obtain a global indice ✓
 * Adapt the algorithm to take into account the nutrients of the expanded Nutri-score ✓
-* Adapt the algorithm to determine if the quantity of food ingested during the specified time seems to be reasonable
+* Adapt the algorithm to determine if the quantity of food ingested during the specified time seems to be reasonable ✓
 * Improve the robustness of the algorithm by improving error handling when erroneous or non-numerical values are entered by the user ✓
 * Adapt the algorithm to compare the values entered with the nutritional recommandations and identify deficiencies, excesses and lack of diversity ✓
-* Adapt the algorithm to be able to retrieve elements with the desired nutritional values, so that it can be suggested to the user
+* Adapt the algorithm to be able to retrieve elements with the desired nutritional values, so that it can be suggested to the user ✓
 ### Information design
 * The interface must present the user with the quantities of nutrients he/she has consumed ✓
 * The user must receive an indicative assessment of the nutritional quality of his/her food (expanded Nutri-score) ✓
 * The program must indicate to the user the main problems of his diet. Warn the user about nutritional deficiencies, excesses and lack of diversity ✓
 * The user should receive suggestions for foods that could help to fill nutritional gaps and achieve healthier eating habits ✓
 ### Collect information for the poster
-* Test the program with a volunteer and keep this test as a case study for using the program
+* Test the program with a volunteer and keep this test as a case study for using the program ✓
 * Extract the information, figures and charts necessary for the poster ✓
 * Writing the text of the poster ✓
 ### Creation of the poster and presentation
